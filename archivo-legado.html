@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo y Legado Digital - Diario de la Marina</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '📚';
+            position: absolute;
+            top: 50%;
+            right: -50px;
+            transform: translateY(-50%);
+            font-size: 15em;
+            opacity: 0.05;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+            animation: slideInLeft 1s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .hero .lead {
+            font-size: 1.4em;
+            line-height: 1.9;
+            color: #f4f1e8;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        /* Preservation section */
+        .preservation {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .preservation h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .preservation-content {
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 30px;
+        }
+        
+        .preservation-content p {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .highlight-box {
+            background: #f4f1e8;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 6px solid #8b6914;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        
+        .highlight-box strong {
+            color: #8b6914;
+        }
+        
+        /* Archive collections */
+        .collections {
+            background: #8b6914;
+            color: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .collections h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .collection-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .collection-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #d4af37;
+            transform: translateY(-5px);
+        }
+        
+        .collection-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .collection-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
+        .collection-card p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .collection-stats {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .collection-stats strong {
+            color: #d4af37;
+        }
+        
+        /* Research resources */
+        .research {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .research h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .resource-item {
+            background: #f4f1e8;
+            padding: 30px;
+            margin: 25px 0;
+            border-left: 5px solid #8b6914;
+        }
+        
+        .resource-item h3 {
+            color: #8b6914;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+        
+        .resource-item p {
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .resource-item ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        
+        .resource-item li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .resource-item li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #8b6914;
+            font-size: 1.3em;
+        }
+        
+        /* Digital preservation */
+        .digital-preservation {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .digital-preservation h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .preservation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .preservation-card {
+            background: rgba(244, 241, 232, 0.1);
+            padding: 30px;
+            border: 2px solid #8b6914;
+        }
+        
+        .preservation-card h3 {
+            color: #d4af37;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+        }
+        
+        .preservation-card p {
+            line-height: 1.8;
+        }
+        
+        /* Access section */
+        .access {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+            text-align: center;
+        }
+        
+        .access h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .access-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .access-card {
+            background: #f4f1e8;
+            padding: 35px;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .access-card:hover {
+            transform: translateY(-8px);
+            border-color: #d4af37;
+            box-shadow: 0 10px 25px rgba(139, 105, 20, 0.2);
+        }
+        
+        .access-icon {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .access-card h3 {
+            color: #8b6914;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+        
+        .access-card p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .access-btn {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #d4af37;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .access-btn:hover {
+            background: #8b6914;
+            color: white;
+        }
+        
+        /* Legacy impact */
+        .legacy-impact {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+            text-align: center;
+        }
+        
+        .legacy-impact h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+        }
+        
+        .legacy-impact p {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto 25px;
+        }
+        
+        .impact-quote {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 35px;
+            margin: 40px auto;
+            max-width: 800px;
+            border: 2px solid #d4af37;
+            font-size: 1.4em;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .cta-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: 2px solid;
+        }
+        
+        .btn-primary {
+            background: #1a1a1a;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+        
+        .btn-primary:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #8b6914;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">Archivo y Legado Digital</div>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> → Archivo Digital
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Preservando la Memoria de Cuba</h1>
+            <p class="lead">
+                El archivo del Diario de la Marina es más que una colección de periódicos antiguos: 
+                es la memoria documental de Cuba durante sus 128 años más cruciales. Cada página, 
+                cada fotografía, cada artículo es ventana única a una época que ya no existe pero 
+                que definió la nación cubana.
+            </p>
+        </div>
+        
+        <!-- Preservation Story -->
+        <div class="preservation">
+            <h2>La Historia de la Preservación</h2>
+            <div class="preservation-content">
+                <p>
+                    Cuando el gobierno revolucionario confiscó el Diario de la Marina el 12 de mayo de 1960, 
+                    el destino del archivo histórico quedó en incertidumbre. 128 años de publicaciones, 
+                    fotografías, documentos editoriales, correspondencia—todo quedó en manos del estado.
+                </p>
+                <p>
+                    Afortunadamente, José Ignacio Rivero Alonso y su equipo habían anticipado el cierre. 
+                    En las semanas previas, discretamente sacaron del edificio documentos clave: ejemplares 
+                    de ediciones históricas, fotografías importantes, archivos editoriales. Este material 
+                    fue preservado en el exilio, formando la base de lo que hoy conocemos del Diario.
+                </p>
+                <p>
+                    Simultáneamente, instituciones internacionales—bibliotecas universitarias en Estados Unidos, 
+                    archivos en España, colecciones privadas—habían microfilmado o guardado ejemplares del 
+                    periódico durante décadas. La Universidad de Miami, en particular, desarrolló una de las 
+                    colecciones más completas del Diario fuera de Cuba.
+                </p>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>Resultado:</strong> Aunque mucho se perdió con la confiscación, suficiente material 
+                sobrevivió para que investigadores, historiadores y descendientes puedan estudiar el Diario. 
+                El archivo disperso en múltiples instituciones constituye testimonio invaluable de la 
+                historia cubana.
+            </div>
+        </div>
+        
+        <!-- Collections -->
+        <div class="collections">
+            <h2>Colecciones del Archivo</h2>
+            <div class="collections-grid">
+                
+                <div class="collection-card">
+                    <span class="collection-icon">📰</span>
+                    <h3>Ediciones Completas</h3>
+                    <p>
+                        Miles de ediciones completas del Diario, desde 1832 hasta 1960. Microfilmes, 
+                        digitalizaciones, y algunos ejemplares físicos preservados en bibliotecas 
+                        y colecciones privadas.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Disponibilidad:</strong> ~40% del archivo completo disponible en 
+                        formato digital o microfilme en instituciones como University of Miami, 
+                        Library of Congress, Biblioteca Nacional de España.
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <span class="collection-icon">📸</span>
+                    <h3>Archivo Fotográfico</h3>
+                    <p>
+                        Fotografías históricas publicadas en el Diario: eventos políticos, vida cotidiana, 
+                        personajes importantes, transformaciones urbanas de La Habana. Testimonio visual 
+                        de más de un siglo.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Contenido:</strong> Miles de fotografías documentando Cuba desde 
+                        finales del siglo XIX hasta 1960. Muchas son únicas y no existen en otros archivos.
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <span class="collection-icon">✍️</span>
+                    <h3>Artículos y Columnas</h3>
+                    <p>
+                        Ensayos de Jorge Mañach, poesía de Gastón Baquero, críticas culturales, editoriales 
+                        políticos. El contenido literario y periodístico que hizo del Diario institución cultural.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Valor:</strong> Muchos artículos nunca fueron publicados en libros. 
+                        Existen solo en las páginas del Diario, haciéndolos tesoros únicos para 
+                        estudiosos de la literatura y periodismo cubano.
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <span class="collection-icon">📋</span>
+                    <h3>Documentos Editoriales</h3>
+                    <p>
+                        Correspondencia interna, políticas editoriales, documentos administrativos de la 
+                        familia Rivero. Revelan el funcionamiento interno del periódico y decisiones 
+                        editoriales cruciales.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Ubicación:</strong> Principalmente en colecciones privadas de la familia 
+                        Rivero y algunos documentos donados a instituciones académicas en el exilio.
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <span class="collection-icon">🎨</span>
+                    <h3>Suplementos Culturales</h3>
+                    <p>
+                        Los famosos suplementos literarios y culturales del Diario, dirigidos por Gastón Baquero. 
+                        Publicaron a los mejores escritores cubanos y promovieron las artes.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Importancia:</strong> Estos suplementos son fuente primaria para estudiar 
+                        la vida cultural cubana de los años 1930-1950. Muchos textos nunca reeditados.
+                    </div>
+                </div>
+                
+                <div class="collection-card">
+                    <span class="collection-icon">🗂️</span>
+                    <h3>Índices y Catálogos</h3>
+                    <p>
+                        Índices temáticos, catálogos de autores, cronologías de eventos cubiertos. 
+                        Herramientas creadas por investigadores para facilitar navegación del archivo.
+                    </p>
+                    <div class="collection-stats">
+                        <strong>Utilidad:</strong> Permiten a investigadores localizar rápidamente 
+                        artículos sobre temas específicos sin revisar miles de ediciones página por página.
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Research Resources -->
+        <div class="research">
+            <h2>Recursos para Investigadores</h2>
+            
+            <div class="resource-item">
+                <h3>🏛️ Instituciones con Colecciones del Diario</h3>
+                <p>
+                    Múltiples instituciones alrededor del mundo preservan partes del archivo del 
+                    Diario de la Marina. Estas son las colecciones más significativas:
+                </p>
+                <ul>
+                    <li><strong>University of Miami Libraries, Cuban Heritage Collection</strong> - La colección más completa fuera de Cuba. Microfilmes de la mayoría de ediciones, documentos de la familia Rivero.</li>
+                    <li><strong>Library of Congress, Washington DC</strong> - Extensa colección microfilmada, especialmente fuerte en décadas 1940-1960.</li>
+                    <li><strong>Biblioteca Nacional José Martí, La Habana</strong> - Archivo completo confiscado en 1960, acceso restringido pero disponible para investigadores aprobados.</li>
+                    <li><strong>Biblioteca Nacional de España, Madrid</strong> - Colección de ediciones del período colonial y primeras décadas republicanas.</li>
+                    <li><strong>New York Public Library</strong> - Microfilmes de períodos selectos, especialmente años 1920-1940.</li>
+                    <li><strong>Colecciones privadas en el exilio</strong> - Familias cubanas y periodistas exiliados preservaron ejemplares personales.</li>
+                </ul>
+            </div>
+            
+            <div class="resource-item">
+                <h3>🔍 Cómo Investigar en el Archivo</h3>
+                <p>
+                    Para investigadores académicos, genealogistas, o cualquier persona interesada 
+                    en consultar el archivo del Diario de la Marina:
+                </p>
+                <ul>
+                    <li><strong>Identifique el período relevante</strong> - Determine qué años o décadas necesita investigar.</li>
+                    <li><strong>Consulte instituciones apropiadas</strong> - Contacte las bibliotecas que tienen el material de su período de interés.</li>
+                    <li><strong>Solicite acceso</strong> - La mayoría de instituciones requieren registro previo para acceder a colecciones especiales.</li>
+                    <li><strong>Use los índices disponibles</strong> - Aproveche catálogos temáticos y cronológicos cuando existan.</li>
+                    <li><strong>Considere formato</strong> - Decida si necesita consultar microfilme, digital, o ejemplares físicos originales.</li>
+                </ul>
+            </div>
+            
+            <div class="resource-item">
+                <h3>📚 Bibliografía sobre el Diario</h3>
+                <p>
+                    Trabajos académicos, tesis, libros publicados que estudian el Diario de la Marina 
+                    o utilizan sus archivos como fuente primaria:
+                </p>
+                <ul>
+                    <li>Estudios sobre el periodismo cubano republicano</li>
+                    <li>Tesis doctorales sobre la familia Rivero</li>
+                    <li>Análisis de la cobertura de eventos históricos específicos</li>
+                    <li>Investigaciones sobre periodistas individuales del Diario</li>
+                    <li>Trabajos sobre la prensa conservadora en América Latina</li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        <!-- Digital Preservation -->
+        <div class="digital-preservation">
+            <h2>Esfuerzos de Preservación Digital</h2>
+            <div class="preservation-grid">
+                
+                <div class="preservation-card">
+                    <h3><span class="icon">💾</span> Digitalización</h3>
+                    <p>
+                        Proyectos en curso para digitalizar microfilmes y ejemplares físicos. 
+                        Tecnología OCR (reconocimiento óptico de caracteres) permite búsquedas 
+                        textuales en documentos históricos.
+                    </p>
+                </div>
+                
+                <div class="preservation-card">
+                    <h3><span class="icon">🌐</span> Acceso en Línea</h3>
+                    <p>
+                        Algunas instituciones ofrecen acceso digital remoto a partes del archivo. 
+                        Facilita investigación sin necesidad de viajar físicamente a repositorios.
+                    </p>
+                </div>
+                
+                <div class="preservation-card">
+                    <h3><span class="icon">🔒</span> Preservación a Largo Plazo</h3>
+                    <p>
+                        Almacenamiento en formatos digitales estables, backups múltiples, migración 
+                        a nuevos formatos conforme tecnología evoluciona. Garantiza acceso futuro.
+                    </p>
+                </div>
+                
+                <div class="preservation-card">
+                    <h3><span class="icon">🤝</span> Colaboración</h3>
+                    <p>
+                        Instituciones comparten recursos, coordinan esfuerzos de digitalización, 
+                        crean catálogos unificados. Maximiza acceso y minimiza duplicación de trabajo.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Access Options -->
+        <div class="access">
+            <h2>Cómo Acceder al Archivo</h2>
+            <div class="access-options">
+                
+                <div class="access-card">
+                    <span class="access-icon">🏫</span>
+                    <h3>Visita en Persona</h3>
+                    <p>
+                        Consulta física de microfilmes y documentos originales en instituciones 
+                        repositorias. Ideal para investigación profunda.
+                    </p>
+                    <a href="#" class="access-btn">Ver Ubicaciones</a>
+                </div>
+                
+                <div class="access-card">
+                    <span class="access-icon">💻</span>
+                    <h3>Acceso Digital</h3>
+                    <p>
+                        Búsqueda y visualización en línea de material digitalizado. Disponible 
+                        en algunas instituciones con subscripción o acceso público.
+                    </p>
+                    <a href="#" class="access-btn">Acceso Remoto</a>
+                </div>
+                
+                <div class="access-card">
+                    <span class="access-icon">📧</span>
+                    <h3>Solicitud de Copias</h3>
+                    <p>
+                        Pedidos de fotocopias o scans digitales de páginas específicas. 
+                        Útil para consultas puntuales sin necesidad de visita.
+                    </p>
+                    <a href="#" class="access-btn">Hacer Solicitud</a>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Legacy Impact -->
+        <div class="legacy-impact">
+            <h2>El Legado que Perdura</h2>
+            <p>
+                Aunque el Diario de la Marina dejó de publicarse en 1960, su legado continúa vivo. 
+                Cada día, investigadores consultan sus archivos. Estudiantes escriben tesis sobre 
+                sus páginas. Descendientes de cubanos buscan en sus anuncios y crónicas sociales. 
+                Historiadores reconstruyen eventos usando sus reportajes.
+            </p>
+            <div class="impact-quote">
+                "El Diario de la Marina no murió en 1960. Vive en cada tesis doctoral que cita 
+                sus páginas, en cada libro de historia que se basa en sus reportajes, en cada 
+                cubano que encuentra en sus archivos la historia de su familia. Es memoria viva."
+            </div>
+            <p>
+                El archivo del Diario es más que colección histórica: es puente entre generaciones, 
+                testimonio de una Cuba que fue, herramienta para entender la Cuba que es. 
+                Preservarlo, digitalizarlo, hacerlo accesible es preservar la memoria de toda una nación.
+            </p>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora Más sobre el Diario de la Marina</h3>
+            <p>Descubre la historia completa del periódico que documentó a Cuba</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="historia-completa.html" class="btn btn-secondary">Historia Completa →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p><a href="index.html">Inicio</a> • <a href="#">Historia</a> • <a href="#">Archivo</a> • <a href="#">Contacto</a></p>
+    </footer>
+    
+</body>
+</html>
