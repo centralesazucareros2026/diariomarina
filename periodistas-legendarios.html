@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodistas Legendarios - Diario de la Marina</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: white;
+            padding: 50px 40px;
+            margin-bottom: 50px;
+            border: 3px solid #8b6914;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '✍️';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 5em;
+            opacity: 0.1;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #8b6914;
+            padding-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            color: #2c2c2c;
+            text-align: justify;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        /* Stats bar */
+        .stats-bar {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            border-left: 4px solid #8b6914;
+            padding-left: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #d4af37;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        /* Journalist profiles */
+        .journalist-profile {
+            background: white;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .journalist-profile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(139, 105, 20, 0.3);
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '★';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 12em;
+            color: rgba(212, 175, 55, 0.1);
+            transform: rotate(15deg);
+        }
+        
+        .profile-header h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-years {
+            font-size: 1.3em;
+            color: #8b6914;
+            background: #f4f1e8;
+            display: inline-block;
+            padding: 8px 20px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-title {
+            font-size: 1.3em;
+            font-style: italic;
+            color: #d4af37;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-content {
+            padding: 40px;
+        }
+        
+        .profile-intro {
+            font-size: 1.2em;
+            line-height: 1.9;
+            color: #2c2c2c;
+            margin-bottom: 25px;
+            text-align: justify;
+            border-left: 5px solid #8b6914;
+            padding-left: 25px;
+            font-style: italic;
+        }
+        
+        .profile-body {
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .profile-body p {
+            margin-bottom: 20px;
+        }
+        
+        .contributions {
+            background: #f4f1e8;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 6px solid #8b6914;
+        }
+        
+        .contributions h3 {
+            color: #8b6914;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+        
+        .contributions ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contributions li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .contributions li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 1.3em;
+            top: 8px;
+        }
+        
+        .famous-works {
+            background: #8b6914;
+            color: white;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .famous-works h3 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+        
+        .work-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #d4af37;
+        }
+        
+        .work-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+        
+        .work-description {
+            line-height: 1.7;
+        }
+        
+        .quote-highlight {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 35px;
+            margin: 30px 0;
+            border: 3px solid #8b6914;
+            position: relative;
+            font-style: italic;
+            font-size: 1.3em;
+            line-height: 1.9;
+        }
+        
+        .quote-highlight::before {
+            content: '"';
+            font-size: 8em;
+            color: #d4af37;
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            font-family: 'Georgia', serif;
+            opacity: 0.2;
+        }
+        
+        .quote-author {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d4af37;
+            font-style: normal;
+            font-size: 0.9em;
+        }
+        
+        /* Otros periodistas grid */
+        .otros-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .otros-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .journalists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .mini-profile {
+            background: #f4f1e8;
+            padding: 30px;
+            border: 2px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .mini-profile:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 8px 20px rgba(139, 105, 20, 0.2);
+        }
+        
+        .mini-profile h3 {
+            color: #8b6914;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .mini-profile .role {
+            color: #d4af37;
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .mini-profile p {
+            line-height: 1.7;
+            text-align: justify;
+        }
+        
+        /* Legacy section */
+        .legacy-section {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+            text-align: center;
+        }
+        
+        .legacy-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+        }
+        
+        .legacy-section p {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto 25px;
+            text-align: justify;
+        }
+        
+        .legacy-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            border: 2px solid #d4af37;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .cta-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: 2px solid;
+        }
+        
+        .btn-primary {
+            background: #1a1a1a;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+        
+        .btn-primary:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #8b6914;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .profile-header h2 {
+                font-size: 1.8em;
+            }
+            
+            .journalists-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">Periodistas Legendarios</div>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> → Periodistas Legendarios
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Las Plumas que Escribieron la Historia</h1>
+            <p class="lead">
+                El Diario de la Marina no fue solo un periódico: fue una escuela, un refugio, 
+                un escenario para las mentes más brillantes del periodismo y la literatura cubana. 
+                Por sus redacciones pasaron poetas que cambiaron la lengua española, ensayistas 
+                que definieron el pensamiento cubano, reporteros que documentaron épocas cruciales.
+            </p>
+            <p class="lead">
+                Estos periodistas no solo informaban: interpretaban, cuestionaban, inspiraban. 
+                Convertían las noticias del día en literatura, la política en pensamiento, 
+                los eventos en historia. Sus nombres resuenan hasta hoy en la memoria cultural 
+                de Cuba y América Latina.
+            </p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Periodistas de élite trabajaron en el Diario</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Premios Nacionales de Literatura</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Años de tradición literaria</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GASTÓN BAQUERO -->
+        <div class="journalist-profile">
+            <div class="profile-header">
+                <h2>Gastón Baquero</h2>
+                <span class="profile-years">1914 - 1997</span>
+                <div class="profile-title">El Poeta del Diario</div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-intro">
+                    "La poesía no es un ornamento de la vida, es la vida misma cuando alcanza 
+                    su más alta intensidad."
+                </div>
+                
+                <div class="profile-body">
+                    <p>
+                        Gastón Baquero fue uno de los grandes poetas cubanos del siglo XX, pero también 
+                        fue un periodista extraordinario que durante décadas escribió para el Diario de la Marina. 
+                        Nacido en Banes, Oriente, llegó a La Habana joven y encontró en el Diario no solo 
+                        un empleo sino una vocación.
+                    </p>
+                    <p>
+                        Como subdirector del periódico y director de su suplemento cultural, Baquero transformó 
+                        el Diario en plataforma para la mejor literatura cubana. Publicó a poetas emergentes, 
+                        rescató a olvidados, promovió el diálogo entre generaciones. Sus propias columnas 
+                        mezclaban periodismo y poesía en prosa de belleza extraordinaria.
+                    </p>
+                    <p>
+                        Sus críticas literarias eran eventos culturales. Escribía sobre libros con la misma 
+                        sensibilidad que dedicaba a sus poemas. Para Baquero, el periodismo cultural era 
+                        arte: cada reseña, cada nota, cada comentario llevaba su sello poético inconfundible.
+                    </p>
+                    <p>
+                        Cuando el Diario cerró en 1960, Baquero partió al exilio. En Madrid continuó escribiendo 
+                        poesía hasta su muerte en 1997. Nunca volvió a Cuba, pero nunca dejó de ser cubano. 
+                        Su obra poética lo sitúa entre los grandes de la lengua española.
+                    </p>
+                </div>
+                
+                <div class="contributions">
+                    <h3>Contribuciones al Diario de la Marina</h3>
+                    <ul>
+                        <li>Subdirector del periódico durante años cruciales</li>
+                        <li>Director del prestigioso suplemento cultural</li>
+                        <li>Columnista semanal con miles de artículos publicados</li>
+                        <li>Crítico literario que formó el gusto de generaciones</li>
+                        <li>Mentor de jóvenes escritores y periodistas</li>
+                        <li>Puente entre el periodismo y la alta literatura</li>
+                    </ul>
+                </div>
+                
+                <div class="famous-works">
+                    <h3>Obras Destacadas</h3>
+                    <div class="work-item">
+                        <div class="work-title">Poemas (1942)</div>
+                        <div class="work-description">
+                            Su primer libro de poesía, publicado mientras trabajaba en el Diario. 
+                            Marcó el inicio de una carrera poética brillante.
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-title">Memorial de un testigo (1966)</div>
+                        <div class="work-description">
+                            Considerada su obra maestra poética. Reflexiones sobre Cuba, el exilio, 
+                            la memoria y la identidad.
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-title">Columnas culturales</div>
+                        <div class="work-description">
+                            Miles de artículos en el Diario que documentan la vida cultural cubana 
+                            de tres décadas. Muchos aún inéditos en libro.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote-highlight">
+                    El Diario de la Marina fue mi universidad, mi taller, mi hogar intelectual. 
+                    Allí aprendí que el periodismo puede ser literatura sin dejar de ser verdad.
+                    <div class="quote-author">— Gastón Baquero</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- JORGE MAÑACH -->
+        <div class="journalist-profile">
+            <div class="profile-header">
+                <h2>Jorge Mañach</h2>
+                <span class="profile-years">1898 - 1961</span>
+                <div class="profile-title">El Ensayista de la República</div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-intro">
+                    "Cuba necesita pensarse a sí misma antes de poder gobernarse."
+                </div>
+                
+                <div class="profile-body">
+                    <p>
+                        Jorge Mañach fue el intelectual público más importante de la Cuba republicana. 
+                        Ensayista brillante, político, educador, y periodista de primer nivel, Mañach 
+                        escribió regularmente para el Diario de la Marina, donde su columna "Glosas" 
+                        era lectura obligada para quien quisiera entender Cuba.
+                    </p>
+                    <p>
+                        Graduado de Harvard, cosmopolita pero profundamente cubano, Mañach combinaba 
+                        rigor intelectual con claridad expositiva. Sus ensayos en el Diario abordaban 
+                        filosofía, política, cultura, sociedad. Explicaba lo complejo con elegancia, 
+                        cuestionaba lo aceptado con cortesía, inspiraba al lector a pensar.
+                    </p>
+                    <p>
+                        Además de periodista, Mañach fue catedrático universitario, político (ministro 
+                        de Estado), y uno de los fundadores del Grupo Minorista, movimiento intelectual 
+                        que renovó la cultura cubana en los años 20. Su biografía de José Martí, 
+                        "Martí el Apóstol", es lectura fundamental sobre el héroe nacional.
+                    </p>
+                    <p>
+                        Crítico inicial de Batista y luego crítico de Castro, Mañach representaba el 
+                        pensamiento liberal democrático. Cuando la revolución radicalizó, partió al exilio. 
+                        Murió en Puerto Rico en 1961, apenas un año después del cierre del Diario.
+                    </p>
+                </div>
+                
+                <div class="contributions">
+                    <h3>Contribuciones al Diario de la Marina</h3>
+                    <ul>
+                        <li>Columnista estrella con "Glosas", leída por toda la élite intelectual cubana</li>
+                        <li>Ensayos que definieron debates políticos y culturales de la época</li>
+                        <li>Análisis penetrantes de la realidad cubana e internacional</li>
+                        <li>Crítica cultural que elevó el nivel del periodismo nacional</li>
+                        <li>Voz de la conciencia liberal democrática en tiempos turbulentos</li>
+                    </ul>
+                </div>
+                
+                <div class="famous-works">
+                    <h3>Obras Destacadas</h3>
+                    <div class="work-item">
+                        <div class="work-title">Indagación del choteo (1928)</div>
+                        <div class="work-description">
+                            Ensayo clásico sobre la psicología cubana. Analiza el "choteo" 
+                            (burla irreverente) como rasgo cultural nacional.
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-title">Martí el Apóstol (1933)</div>
+                        <div class="work-description">
+                            Biografía definitiva de José Martí. Combina rigor histórico con 
+                            prosa literaria. Obra fundamental de la cultura cubana.
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-title">Historia y estilo (1944)</div>
+                        <div class="work-description">
+                            Ensayos sobre literatura, arte y cultura. Muestra la amplitud 
+                            intelectual de Mañach.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote-highlight">
+                    En las páginas del Diario de la Marina encontré el espacio para pensar en voz alta 
+                    sobre Cuba. Cada "Glosa" era un diálogo con lectores inteligentes que merecían 
+                    argumentos, no consignas.
+                    <div class="quote-author">— Jorge Mañach</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Otros Periodistas -->
+        <div class="otros-section">
+            <h2>Otros Periodistas Notables</h2>
+            <div class="journalists-grid">
+                
+                <div class="mini-profile">
+                    <h3>Enrique Fontanills</h3>
+                    <div class="role">Cronista de La Habana</div>
+                    <p>
+                        Sus crónicas sobre la vida habanera capturaban la esencia de la ciudad: 
+                        calles, personajes, costumbres, transformaciones. Documentó décadas de 
+                        historia urbana con ojo de poeta y precisión de historiador.
+                    </p>
+                </div>
+                
+                <div class="mini-profile">
+                    <h3>Francisco Ichaso</h3>
+                    <div class="role">Crítico de Arte y Cultura</div>
+                    <p>
+                        Intelectual refinado, sus críticas de arte, teatro y literatura eran 
+                        referencia obligada. Formó el gusto estético de generaciones de lectores. 
+                        Escribía con erudición accesible.
+                    </p>
+                </div>
+                
+                <div class="mini-profile">
+                    <h3>José Ignacio de la Campa</h3>
+                    <div class="role">Editorialista Político</div>
+                    <p>
+                        Sus editoriales políticos combinaban análisis profundo con prosa 
+                        elegante. Defendió posiciones conservadoras pero siempre argumentadas, 
+                        nunca dogmáticas. Voz respetada en debates nacionales.
+                    </p>
+                </div>
+                
+                <div class="mini-profile">
+                    <h3>Octavio R. Costa</h3>
+                    <div class="role">Cronista Social</div>
+                    <p>
+                        Documentó la vida de la alta sociedad habanera con estilo y discreción. 
+                        Sus crónicas sociales eran más que chismes: retratos de una época, 
+                        testimonios de un mundo que desaparecería.
+                    </p>
+                </div>
+                
+                <div class="mini-profile">
+                    <h3>Luis Amado Blanco</h3>
+                    <div class="role">Reportero de Investigación</div>
+                    <p>
+                        Periodista de la vieja escuela: salía a la calle, investigaba, verificaba. 
+                        Sus reportajes sobre corrupción, injusticias y problemas sociales mostraban 
+                        el compromiso del Diario con el periodismo de calidad.
+                    </p>
+                </div>
+                
+                <div class="mini-profile">
+                    <h3>José María Chacón y Calvo</h3>
+                    <div class="role">Erudito y Ensayista</div>
+                    <p>
+                        Académico de primer nivel, sus ensayos en el Diario sobre historia, 
+                        literatura y pensamiento hispanoamericano elevaban el nivel cultural 
+                        del periódico. Educaba deleitando.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Legacy Section -->
+        <div class="legacy-section">
+            <h2>El Legado de los Periodistas del Diario</h2>
+            <p>
+                Los periodistas del Diario de la Marina no solo informaban: formaban. Creaban opinión 
+                pública ilustrada, estimulaban el pensamiento crítico, elevaban el debate nacional. 
+                En sus columnas, crónicas y editoriales, Cuba se pensaba a sí misma.
+            </p>
+            <p>
+                Muchos de estos periodistas eran también escritores, poetas, ensayistas de primera línea. 
+                El Diario les ofrecía tribuna diaria para alcanzar miles de lectores. A cambio, ellos 
+                llenaban sus páginas con prosa de calidad literaria, análisis penetrante, reportajes 
+                memorables.
+            </p>
+            <div class="legacy-highlight">
+                Cuando el Diario cerró en 1960, Cuba perdió más que un periódico: perdió una escuela 
+                de periodismo, un foro de debate intelectual, un espacio donde las mejores mentes del 
+                país conversaban con el público. Esa tradición se fue al exilio o se silenció para siempre.
+            </div>
+            <p>
+                Hoy, las obras de Gastón Baquero, Jorge Mañach y sus colegas se estudian en universidades, 
+                se publican en antologías, se citan en investigaciones. Su periodismo trascendió el día 
+                a día para convertirse en literatura, en documento histórico, en testimonio de una época 
+                irrepetible en la cultura cubana.
+            </p>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Descubre Más sobre el Diario de la Marina</h3>
+            <p>Explora la historia del periódico que reunió a las mejores plumas de Cuba</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="familia-rivero.html" class="btn btn-secondary">La Familia Rivero →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p><a href="index.html">Inicio</a> • <a href="#">Historia</a> • <a href="#">Archivo</a> • <a href="#">Contacto</a></p>
+    </footer>
+    
+</body>
+</html>

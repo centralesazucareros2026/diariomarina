@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Familia Rivero - Dinastía del Periodismo Cubano</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: white;
+            padding: 50px 40px;
+            margin-bottom: 50px;
+            border: 3px solid #8b6914;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '👨‍👨‍👦';
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 5em;
+            opacity: 0.1;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #8b6914;
+            padding-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            color: #2c2c2c;
+            text-align: justify;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .highlight-box {
+            background: #8b6914;
+            color: white;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid #d4af37;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        
+        /* Árbol genealógico section */
+        .family-tree-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 5px double #8b6914;
+            color: #f4f1e8;
+        }
+        
+        .family-tree-section h2 {
+            font-size: 2.8em;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .tree-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .generation {
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .generation::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 50px;
+            background: #8b6914;
+            transform: translateX(-50%);
+        }
+        
+        .generation:last-child::before {
+            display: none;
+        }
+        
+        .generation-label {
+            text-align: center;
+            font-size: 1.1em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .member-card {
+            background: rgba(244, 241, 232, 0.1);
+            border: 3px solid #8b6914;
+            padding: 35px;
+            margin: 0 auto;
+            max-width: 700px;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .member-card:hover {
+            transform: scale(1.02);
+            border-color: #d4af37;
+        }
+        
+        .member-card h3 {
+            font-size: 2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .member-card .years {
+            font-size: 1.1em;
+            color: #8b6914;
+            background: #f4f1e8;
+            display: inline-block;
+            padding: 5px 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .member-card .role {
+            font-size: 1.2em;
+            color: #d4af37;
+            font-style: italic;
+            margin-bottom: 20px;
+            border-left: 4px solid #8b6914;
+            padding-left: 15px;
+        }
+        
+        .member-card p {
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .achievements {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #8b6914;
+        }
+        
+        .achievements h4 {
+            color: #d4af37;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .achievements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .achievements li {
+            padding: 8px 0 8px 30px;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .achievements li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 1.2em;
+        }
+        
+        /* Legado section */
+        .legado-dinastico {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .legado-dinastico h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .legado-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .legado-card {
+            background: #f4f1e8;
+            padding: 30px;
+            border-left: 5px solid #8b6914;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .legado-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 105, 20, 0.2);
+        }
+        
+        .legado-card h3 {
+            font-size: 1.6em;
+            color: #8b6914;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .icon {
+            font-size: 1.5em;
+        }
+        
+        .legado-card p {
+            line-height: 1.8;
+            text-align: justify;
+            color: #2c2c2c;
+        }
+        
+        /* Valores familiares */
+        .valores {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+            text-align: center;
+        }
+        
+        .valores h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .valor-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .valor-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #d4af37;
+            transform: scale(1.05);
+        }
+        
+        .valor-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .valor-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
+        .valor-item p {
+            line-height: 1.7;
+        }
+        
+        /* Timeline histórica */
+        .timeline-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .timeline-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #8b6914;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-event {
+            position: relative;
+            margin-bottom: 50px;
+            width: 45%;
+        }
+        
+        .timeline-event.left {
+            left: 0;
+            text-align: right;
+            padding-right: 40px;
+        }
+        
+        .timeline-event.right {
+            left: 55%;
+            padding-left: 40px;
+        }
+        
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: #d4af37;
+            border: 5px solid #1a1a1a;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .timeline-event.left::before {
+            right: -10px;
+        }
+        
+        .timeline-event.right::before {
+            left: -10px;
+        }
+        
+        .event-content {
+            background: #f4f1e8;
+            padding: 20px;
+            border: 2px solid #8b6914;
+        }
+        
+        .event-year {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #d4af37;
+            padding: 5px 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .event-content h3 {
+            color: #8b6914;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .event-content p {
+            line-height: 1.7;
+            text-align: justify;
+        }
+        
+        /* Quotes section */
+        .quotes-section {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .quotes-section h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .quote-box {
+            background: rgba(244, 241, 232, 0.05);
+            padding: 35px;
+            margin: 30px auto;
+            max-width: 800px;
+            border-left: 6px solid #8b6914;
+            position: relative;
+            font-style: italic;
+            font-size: 1.2em;
+            line-height: 1.9;
+        }
+        
+        .quote-box::before {
+            content: '"';
+            font-size: 6em;
+            color: #d4af37;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-family: 'Georgia', serif;
+            opacity: 0.3;
+        }
+        
+        .quote-author {
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d4af37;
+            font-style: normal;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .cta-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: 2px solid;
+        }
+        
+        .btn-primary {
+            background: #1a1a1a;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+        
+        .btn-primary:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #8b6914;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-event {
+                width: 100%;
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .timeline-event.left,
+            .timeline-event.right {
+                left: 0;
+            }
+            
+            .timeline-event::before {
+                left: 21px !important;
+                right: auto !important;
+            }
+            
+            .valores-grid,
+            .legado-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">La Familia Rivero: Dinastía del Periodismo Cubano</div>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> → La Familia Rivero
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Una Dinastía al Servicio de la Verdad</h1>
+            <p class="lead">
+                Durante más de un siglo, la familia Rivero no solo fue dueña del Diario de la Marina: 
+                fueron sus guardianes, sus visionarios, su alma. José Ignacio Rivero y su hijo, 
+                José Ignacio Rivero Alonso, transformaron un modesto periódico comercial en la voz 
+                más influyente de Cuba, manteniendo estándares periodísticos excepcionales a través 
+                de generaciones.
+            </p>
+            <p class="lead">
+                Esta es la historia de una familia que sacrificó todo por la libertad de prensa, 
+                que defendió la verdad cuando el precio era el exilio, y que dejó un legado que 
+                perdura más allá del cierre del periódico.
+            </p>
+            <div class="highlight-box">
+                "El periodismo no es un negocio, es una misión. Y los Rivero lo entendieron 
+                como pocos en la historia de Cuba." — Historiador del periodismo cubano
+            </div>
+        </div>
+        
+        <!-- Árbol Genealógico -->
+        <div class="family-tree-section">
+            <h2>⚜️ La Dinastía Rivero</h2>
+            <div class="tree-container">
+                
+                <div class="generation">
+                    <div class="generation-label">Primera Generación</div>
+                    <div class="member-card">
+                        <h3>José Ignacio Rivero</h3>
+                        <span class="years">1850s - 1940s</span>
+                        <div class="role">Fundador de la Dinastía Periodística</div>
+                        <p>
+                            José Ignacio Rivero adquirió el Diario de la Marina cuando era apenas un 
+                            boletín comercial de noticias marítimas. Con visión empresarial y pasión 
+                            periodística, lo transformó en el periódico más importante de Cuba.
+                        </p>
+                        <p>
+                            Bajo su dirección, el Diario expandió su cobertura más allá de temas comerciales 
+                            para abarcar política, cultura, sociedad y acontecimientos nacionales e internacionales. 
+                            Estableció los principios editoriales que guiarían al periódico por generaciones.
+                        </p>
+                        <div class="achievements">
+                            <h4>Logros Principales:</h4>
+                            <ul>
+                                <li>Transformó el Diario de boletín comercial a periódico nacional</li>
+                                <li>Modernizó las instalaciones e incorporó tecnología de impresión avanzada</li>
+                                <li>Estableció red de corresponsales en toda Cuba</li>
+                                <li>Defendió la libertad de prensa durante guerras de independencia</li>
+                                <li>Creó las bases financieras para la independencia editorial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="generation">
+                    <div class="generation-label">Segunda Generación</div>
+                    <div class="member-card">
+                        <h3>José Ignacio Rivero Alonso</h3>
+                        <span class="years">1900s - 1980s</span>
+                        <div class="role">Director y Última Voz del Diario de la Marina</div>
+                        <p>
+                            "Pepín" Rivero, como era conocido, heredó no solo un periódico sino una tradición 
+                            de excelencia periodística. Educado en las mejores instituciones, combinaba la 
+                            visión de su padre con comprensión profunda de los tiempos modernos.
+                        </p>
+                        <p>
+                            Durante su dirección (1919-1960), el Diario alcanzó su apogeo: circulación récord, 
+                            influencia política sin precedentes, y un equipo editorial que incluía a las mejores 
+                            plumas de Cuba. Fue él quien enfrentó el momento más difícil: la llegada de la 
+                            revolución y la presión para silenciar la voz independiente del periódico.
+                        </p>
+                        <p>
+                            Rivero Alonso se negó a claudicar. Cuando el gobierno revolucionario exigió que 
+                            el Diario cambiara su línea editorial, él mantuvo su posición. El resultado fue 
+                            la confiscación del periódico y su exilio permanente.
+                        </p>
+                        <div class="achievements">
+                            <h4>Logros Principales:</h4>
+                            <ul>
+                                <li>Dirigió el Diario durante su época dorada (1920-1960)</li>
+                                <li>Contrató a los mejores periodistas: Gastón Baquero, Jorge Mañach, y otros</li>
+                                <li>Defendió la libertad de prensa ante dictaduras y revoluciones</li>
+                                <li>Mantuvo estándares éticos inquebrantables hasta el final</li>
+                                <li>Preservó el archivo histórico del periódico antes del cierre</li>
+                                <li>Continuó la tradición periodística en el exilio</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Legado Dinástico -->
+        <div class="legado-dinastico">
+            <h2>El Legado de los Rivero</h2>
+            <div class="legado-grid">
+                
+                <div class="legado-card">
+                    <h3><span class="icon">📰</span> Periodismo Ético</h3>
+                    <p>
+                        Los Rivero establecieron estándares de ética periodística que el Diario mantuvo 
+                        durante 128 años. Verificación de fuentes, separación entre noticias y opinión, 
+                        y compromiso con la verdad fueron pilares inquebrantables.
+                    </p>
+                </div>
+                
+                <div class="legado-card">
+                    <h3><span class="icon">🎓</span> Formación de Periodistas</h3>
+                    <p>
+                        El Diario fue escuela para generaciones de periodistas cubanos. Bajo la dirección 
+                        de los Rivero, jóvenes reporteros aprendían el oficio de los mejores. Muchos se 
+                        convirtieron en figuras destacadas del periodismo latinoamericano.
+                    </p>
+                </div>
+                
+                <div class="legado-card">
+                    <h3><span class="icon">🏛️</span> Institución Cultural</h3>
+                    <p>
+                        Más allá de las noticias, los Rivero convirtieron el Diario en promotor de la 
+                        cultura cubana. Poesía, literatura, artes plásticas encontraron espacio en sus 
+                        páginas. El periódico fue mecenas de artistas y escritores.
+                    </p>
+                </div>
+                
+                <div class="legado-card">
+                    <h3><span class="icon">⚖️</span> Independencia Editorial</h3>
+                    <p>
+                        Los Rivero defendieron la independencia del Diario frente a gobiernos, 
+                        presiones económicas y amenazas. Esta independencia costó el periódico en 1960, 
+                        pero preservó su integridad histórica.
+                    </p>
+                </div>
+                
+                <div class="legado-card">
+                    <h3><span class="icon">📚</span> Memoria Histórica</h3>
+                    <p>
+                        Conscientes del valor histórico del periódico, los Rivero preservaron archivos, 
+                        documentos y ejemplares. Gracias a su visión, investigadores hoy pueden estudiar 
+                        más de un siglo de historia cubana.
+                    </p>
+                </div>
+                
+                <div class="legado-card">
+                    <h3><span class="icon">💪</span> Coraje Moral</h3>
+                    <p>
+                        Enfrentar dictaduras, revoluciones y presiones gubernamentales requirió coraje. 
+                        Los Rivero nunca cedieron en sus principios, incluso cuando significó perder 
+                        todo. Su ejemplo inspira a periodistas hasta hoy.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Valores Familiares -->
+        <div class="valores">
+            <h2>Valores que Definieron a los Rivero</h2>
+            <div class="valores-grid">
+                
+                <div class="valor-item">
+                    <div class="valor-icon">🎯</div>
+                    <h3>Integridad</h3>
+                    <p>
+                        La verdad por encima de todo. Los Rivero jamás permitieron que intereses 
+                        económicos o políticos comprometieran la integridad editorial del Diario.
+                    </p>
+                </div>
+                
+                <div class="valor-item">
+                    <div class="valor-icon">📖</div>
+                    <h3>Educación</h3>
+                    <p>
+                        Creían en el periodismo como herramienta educativa. El Diario no solo informaba: 
+                        formaba criterio, elevaba el debate público, cultivaba la inteligencia cívica.
+                    </p>
+                </div>
+                
+                <div class="valor-item">
+                    <div class="valor-icon">🇨🇺</div>
+                    <h3>Cubanía</h3>
+                    <p>
+                        Profundamente cubanos, los Rivero amaban su país. Defendían a Cuba con pasión, 
+                        criticaban con amor, y soñaban con su grandeza. El Diario fue expresión de ese amor.
+                    </p>
+                </div>
+                
+                <div class="valor-item">
+                    <div class="valor-icon">✝️</div>
+                    <h3>Fe Católica</h3>
+                    <p>
+                        Su catolicismo profundo guiaba principios éticos y morales. El Diario reflejaba 
+                        valores cristianos de justicia, verdad y dignidad humana.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Timeline Histórica -->
+        <div class="timeline-section">
+            <h2>Momentos Clave de la Dinastía</h2>
+            <div class="timeline">
+                
+                <div class="timeline-event left">
+                    <div class="event-content">
+                        <span class="event-year">1890s</span>
+                        <h3>Adquisición del Diario</h3>
+                        <p>
+                            José Ignacio Rivero adquiere el Diario de la Marina, entonces un simple 
+                            boletín de noticias comerciales y marítimas con circulación limitada.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-event right">
+                    <div class="event-content">
+                        <span class="event-year">1902</span>
+                        <h3>Cuba Independiente</h3>
+                        <p>
+                            Con la independencia de Cuba, los Rivero redefinen la misión del Diario: 
+                            ser la voz de la nueva república, defensor de la democracia y las libertades.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-event left">
+                    <div class="event-content">
+                        <span class="event-year">1919</span>
+                        <h3>Segunda Generación</h3>
+                        <p>
+                            José Ignacio Rivero Alonso asume la dirección del periódico. Comienza la 
+                            época dorada del Diario: expansión, modernización, excelencia editorial.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-event right">
+                    <div class="event-content">
+                        <span class="event-year">1930s-1940s</span>
+                        <h3>Apogeo del Diario</h3>
+                        <p>
+                            Bajo Rivero Alonso, el Diario alcanza circulación récord y se consolida como 
+                            el periódico más influyente de Cuba. Atrae a los mejores periodistas del país.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-event left">
+                    <div class="event-content">
+                        <span class="event-year">1959-1960</span>
+                        <h3>Última Batalla</h3>
+                        <p>
+                            Rivero Alonso enfrenta presión revolucionaria para silenciar al Diario. 
+                            Se niega a ceder. El 12 de mayo de 1960, el gobierno confisca el periódico.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-event right">
+                    <div class="event-content">
+                        <span class="event-year">1960-1980s</span>
+                        <h3>Exilio y Memoria</h3>
+                        <p>
+                            En el exilio, Rivero Alonso preserva la memoria del Diario. Nunca volvió a 
+                            publicar, pero mantuvo viva la tradición periodística que su familia había creado.
+                        </p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Quotes -->
+        <div class="quotes-section">
+            <h2>Lo que Dijeron de los Rivero</h2>
+            
+            <div class="quote-box">
+                José Ignacio Rivero Alonso era más que un director de periódico. Era un caballero 
+                del periodismo, un defensor incansable de la libertad, un hombre que prefirió perder 
+                su patrimonio antes que su dignidad.
+                <div class="quote-author">— Gastón Baquero, poeta y periodista del Diario</div>
+            </div>
+            
+            <div class="quote-box">
+                Los Rivero entendieron que el periodismo libre es oxígeno de la democracia. Cuando 
+                les pidieron que dejaran de respirar, eligieron el exilio. Cuba perdió su voz más clara.
+                <div class="quote-author">— Historiador del periodismo latinoamericano</div>
+            </div>
+            
+            <div class="quote-box">
+                En el Diario de la Marina bajo los Rivero, aprendí que el periodismo no es profesión: 
+                es vocación, es servicio, es compromiso con la verdad. Esa lección me acompañó toda la vida.
+                <div class="quote-author">— Periodista formado en el Diario</div>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Descubre Más sobre el Diario de la Marina</h3>
+            <p>Explora la historia completa del periódico que la familia Rivero construyó</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="cierre-1960.html" class="btn btn-secondary">El Cierre de 1960 →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p><a href="index.html">Inicio</a> • <a href="#">Historia</a> • <a href="#">Archivo</a> • <a href="#">Contacto</a></p>
+    </footer>
+    
+</body>
+</html>

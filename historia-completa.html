@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia del Diario de la Marina (1832-1960)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::after {
+            content: '1832-1960';
+            position: absolute;
+            top: 50%;
+            right: -80px;
+            transform: translateY(-50%) rotate(-90deg);
+            font-size: 10em;
+            font-weight: bold;
+            color: rgba(139, 105, 20, 0.1);
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+            animation: slideInLeft 1s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .hero .lead {
+            font-size: 1.4em;
+            line-height: 1.9;
+            color: #f4f1e8;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .years-badge {
+            display: inline-block;
+            background: #8b6914;
+            color: white;
+            padding: 15px 30px;
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 30px;
+            border: 3px solid #d4af37;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Épocas principales */
+        .epochs-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .epochs-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .epoch-card {
+            background: #f4f1e8;
+            margin: 40px 0;
+            border: 3px solid #8b6914;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .epoch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(139, 105, 20, 0.3);
+        }
+        
+        .epoch-header {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .epoch-period {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+        
+        .epoch-title {
+            font-size: 1.8em;
+            font-style: italic;
+        }
+        
+        .epoch-content {
+            padding: 40px;
+        }
+        
+        .epoch-intro {
+            font-size: 1.2em;
+            line-height: 1.9;
+            margin-bottom: 25px;
+            color: #2c2c2c;
+            text-align: justify;
+            border-left: 5px solid #8b6914;
+            padding-left: 25px;
+            font-style: italic;
+        }
+        
+        .epoch-body p {
+            line-height: 1.9;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .epoch-highlights {
+            background: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 6px solid #d4af37;
+        }
+        
+        .epoch-highlights h3 {
+            color: #8b6914;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        
+        .epoch-highlights ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .epoch-highlights li {
+            padding: 10px 0 10px 35px;
+            position: relative;
+            line-height: 1.7;
+        }
+        
+        .epoch-highlights li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #8b6914;
+            font-size: 1.5em;
+            top: 8px;
+        }
+        
+        /* Timeline visual */
+        .timeline-visual {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+            color: #f4f1e8;
+        }
+        
+        .timeline-visual h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #8b6914;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 45%;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.7s; }
+        .timeline-item:nth-child(8) { animation-delay: 0.8s; }
+        
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+            padding-right: 50px;
+        }
+        
+        .timeline-item.right {
+            left: 55%;
+            padding-left: 50px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: #d4af37;
+            border: 5px solid #1a1a1a;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .timeline-item.left::before {
+            right: -12px;
+        }
+        
+        .timeline-item.right::before {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            background: rgba(244, 241, 232, 0.1);
+            padding: 25px;
+            border: 2px solid #8b6914;
+        }
+        
+        .timeline-year {
+            display: inline-block;
+            background: #d4af37;
+            color: #1a1a1a;
+            padding: 8px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-content h3 {
+            color: #d4af37;
+            font-size: 1.4em;
+            margin-bottom: 12px;
+        }
+        
+        .timeline-content p {
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        /* Stats section */
+        .stats-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+            text-align: center;
+        }
+        
+        .stats-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            background: #f4f1e8;
+            padding: 35px;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-8px);
+            border-color: #d4af37;
+            box-shadow: 0 10px 25px rgba(139, 105, 20, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #8b6914;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .stat-label {
+            font-size: 1.2em;
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Transformaciones section */
+        .transformations {
+            background: #8b6914;
+            color: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .transformations h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .transformation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .transformation-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .transformation-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #d4af37;
+            transform: scale(1.03);
+        }
+        
+        .transformation-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .transformation-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            color: #d4af37;
+        }
+        
+        .transformation-card p {
+            line-height: 1.8;
+            text-align: justify;
+        }
+        
+        /* Legacy quote */
+        .legacy-quote {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 5px double #8b6914;
+            text-align: center;
+            position: relative;
+        }
+        
+        .legacy-quote::before {
+            content: '📰';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15em;
+            opacity: 0.05;
+        }
+        
+        .legacy-quote blockquote {
+            font-size: 2em;
+            font-style: italic;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            color: #d4af37;
+        }
+        
+        .legacy-quote cite {
+            display: block;
+            margin-top: 30px;
+            font-size: 0.6em;
+            font-style: normal;
+            color: #f4f1e8;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .cta-box h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            border: 2px solid;
+        }
+        
+        .btn-primary {
+            background: #1a1a1a;
+            color: #d4af37;
+            border-color: #d4af37;
+        }
+        
+        .btn-primary:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #8b6914;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero::after {
+                display: none;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .timeline-item.left,
+            .timeline-item.right {
+                left: 0;
+            }
+            
+            .timeline-item::before {
+                left: 21px !important;
+                right: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">Historia Completa: 1832-1960</div>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> → Historia
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>128 Años Documentando a Cuba</h1>
+            <p class="lead">
+                De boletín comercial a voz nacional. De la colonia española a la república 
+                independiente. De testigo silencioso a protagonista del debate público. 
+                Esta es la historia del periódico que acompañó a Cuba durante sus momentos 
+                más cruciales, que documentó revoluciones y transformaciones, que fue más 
+                que tinta sobre papel: fue la memoria viva de una nación.
+            </p>
+            <div class="years-badge">1832 - 1960</div>
+        </div>
+        
+        <!-- Épocas Principales -->
+        <div class="epochs-section">
+            <h2>Las Grandes Épocas del Diario</h2>
+            
+            <!-- ÉPOCA 1: Orígenes Coloniales -->
+            <div class="epoch-card">
+                <div class="epoch-header">
+                    <div class="epoch-period">1832 - 1898</div>
+                    <div class="epoch-title">Orígenes Coloniales</div>
+                </div>
+                <div class="epoch-content">
+                    <div class="epoch-intro">
+                        "Nació como un simple boletín de noticias marítimas en una Cuba que aún 
+                        era colonia española. Nadie imaginó que este modesto periódico sobreviviría 
+                        guerras, revoluciones y el nacimiento de una nación."
+                    </div>
+                    <div class="epoch-body">
+                        <p>
+                            El Diario de la Marina comenzó en 1832 como una publicación comercial enfocada 
+                            en información marítima: llegadas y salidas de barcos, precios de mercancías, 
+                            noticias de comercio. La Habana era el puerto más importante del Caribe español, 
+                            y los comerciantes necesitaban información actualizada.
+                        </p>
+                        <p>
+                            Durante décadas mantuvo ese perfil modesto: un boletín útil pero sin ambiciones 
+                            periodísticas mayores. Su circulación era limitada, su contenido específico, 
+                            su influencia mínima. Era un periódico de y para comerciantes.
+                        </p>
+                        <p>
+                            Todo cambió cuando la familia Rivero adquirió el periódico en la década de 1890. 
+                            José Ignacio Rivero vio potencial más allá del comercio marítimo. Bajo su dirección, 
+                            el Diario comenzó a expandir su cobertura: política, sociedad, cultura. De boletín 
+                            comercial pasó a ser periódico general.
+                        </p>
+                        <p>
+                            Las Guerras de Independencia (1868-1878, 1895-1898) fueron cruciales. El Diario, 
+                            inicialmente pro-español, tuvo que navegar tensiones enormes. Cuba se partía entre 
+                            independentistas y españolistas. El periódico reflejaba esas divisiones, pero 
+                            gradualmente comenzó a evolucionar hacia posiciones más cubanas, menos peninsulares.
+                        </p>
+                    </div>
+                    <div class="epoch-highlights">
+                        <h3>Momentos Clave de la Época:</h3>
+                        <ul>
+                            <li>1832: Fundación como boletín de noticias marítimas y comerciales</li>
+                            <li>1844: Primera gran expansión, incorpora noticias políticas</li>
+                            <li>1857: Cambio de nombre a "Diario de la Marina"</li>
+                            <li>1890s: Adquisición por la familia Rivero, transformación profunda</li>
+                            <li>1895-1898: Cobertura de la Guerra de Independencia</li>
+                            <li>1898: Fin del dominio español, inicio de nueva era</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ÉPOCA 2: República Naciente -->
+            <div class="epoch-card">
+                <div class="epoch-header">
+                    <div class="epoch-period">1902 - 1920</div>
+                    <div class="epoch-title">República Naciente</div>
+                </div>
+                <div class="epoch-content">
+                    <div class="epoch-intro">
+                        "Cuba independiente necesitaba instituciones fuertes. El Diario de la Marina 
+                        se reinventó como voz de la nueva república, defensor de la democracia, 
+                        cronista de una nación que aprendía a gobernarse."
+                    </div>
+                    <div class="epoch-body">
+                        <p>
+                            Con la independencia de Cuba en 1902, el Diario enfrentó una decisión existencial: 
+                            ¿seguir siendo un periódico español en Cuba libre, o convertirse en periódico cubano? 
+                            Los Rivero eligieron lo segundo. El Diario se cubanizó sin perder sus raíces hispanas.
+                        </p>
+                        <p>
+                            La primera república fue caótica: gobiernos débiles, intervenciones estadounidenses, 
+                            corrupción rampante, conflictos políticos constantes. El Diario documentó todo, 
+                            criticó abusos, defendió instituciones democráticas. Se convirtió en voz de 
+                            conciencia cívica.
+                        </p>
+                        <p>
+                            Durante estos años, el periódico expandió su infraestructura: nuevas rotativas, 
+                            red de corresponsales por toda Cuba, secciones especializadas. De periódico local 
+                            habanero pasó a ser verdaderamente nacional. Su circulación creció exponencialmente.
+                        </p>
+                        <p>
+                            La competencia periodística también creció. Aparecieron otros diarios importantes, 
+                            pero el Diario mantuvo liderazgo por calidad editorial, recursos, y prestigio 
+                            acumulado. Era lectura obligada para quien quisiera entender Cuba.
+                        </p>
+                    </div>
+                    <div class="epoch-highlights">
+                        <h3>Momentos Clave de la Época:</h3>
+                        <ul>
+                            <li>1902: Proclamación de la República, nueva misión editorial</li>
+                            <li>1906-1909: Cobertura de segunda intervención estadounidense</li>
+                            <li>1912: Modernización tecnológica, nuevas rotativas</li>
+                            <li>1917: Expansión nacional, corresponsalías en todas las provincias</li>
+                            <li>1919: José Ignacio Rivero Alonso asume dirección</li>
+                            <li>1920: Circulación supera 50,000 ejemplares diarios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ÉPOCA 3: Años Dorados -->
+            <div class="epoch-card">
+                <div class="epoch-header">
+                    <div class="epoch-period">1920 - 1952</div>
+                    <div class="epoch-title">Años Dorados</div>
+                </div>
+                <div class="epoch-content">
+                    <div class="epoch-intro">
+                        "La época de oro del periodismo cubano. El Diario alcanzó su apogeo: 
+                        circulación récord, periodistas legendarios, influencia política inmensa. 
+                        Era el periódico más importante de Cuba y uno de los mejores de América Latina."
+                    </div>
+                    <div class="epoch-body">
+                        <p>
+                            Bajo la dirección visionaria de José Ignacio Rivero Alonso, el Diario vivió 
+                            su época dorada. Contrató a los mejores periodistas: Gastón Baquero, Jorge Mañach, 
+                            Francisco Ichaso. Sus páginas eran escuela de periodismo, tribuna de debate, 
+                            espacio para la mejor literatura.
+                        </p>
+                        <p>
+                            Los suplementos culturales del Diario eran eventos semanales. Poetas, ensayistas, 
+                            críticos de arte encontraban espacio para crear. El periódico fue mecenas de la 
+                            cultura cubana, promotor de artistas, difusor de ideas. Era más que noticias: 
+                            era institución cultural.
+                        </p>
+                        <p>
+                            Políticamente, el Diario mantuvo independencia editorial. Criticó gobiernos corruptos, 
+                            defendió libertades civiles, promovió democracia. Enfrentó censura ocasional pero 
+                            nunca cedió en principios. Su posición conservadora pero democrática le ganó 
+                            respeto incluso de adversarios.
+                        </p>
+                        <p>
+                            La década de 1940 marcó el pico: circulación superior a 100,000 ejemplares, 
+                            influencia política enorme, prestigio internacional. El Diario era sinónimo de 
+                            periodismo de calidad en Cuba. Ser publicado en sus páginas era honor; 
+                            escribir para el Diario era aspiración de todo periodista.
+                        </p>
+                    </div>
+                    <div class="epoch-highlights">
+                        <h3>Momentos Clave de la Época:</h3>
+                        <ul>
+                            <li>1925: Lanzamiento del suplemento cultural, dirigido por Gastón Baquero</li>
+                            <li>1933: Cobertura de la revolución contra Machado</li>
+                            <li>1940: Nueva constitución democrática, el Diario jugó rol crucial</li>
+                            <li>1944-1948: Era dorada, circulación récord de 120,000 ejemplares</li>
+                            <li>1952: Golpe de estado de Batista, comienza nueva tensión</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ÉPOCA 4: Crisis y Cierre -->
+            <div class="epoch-card">
+                <div class="epoch-header">
+                    <div class="epoch-period">1952 - 1960</div>
+                    <div class="epoch-title">Crisis y Cierre</div>
+                </div>
+                <div class="epoch-content">
+                    <div class="epoch-intro">
+                        "Los últimos años fueron los más difíciles. Dictadura de Batista, 
+                        revolución de Castro, presiones crecientes sobre la prensa libre. 
+                        El Diario resistió hasta que resistir fue imposible."
+                    </div>
+                    <div class="epoch-body">
+                        <p>
+                            El golpe de Batista en 1952 inició período turbulento. El Diario criticó la 
+                            dictadura con cautela pero firmeza. Defendió el retorno a la democracia, denunció 
+                            abusos, mantuvo presión sobre el régimen. Batista toleró estas críticas, aunque 
+                            con tensión constante.
+                        </p>
+                        <p>
+                            La revolución de 1959 trajo esperanzas iniciales. El Diario cubrió el triunfo 
+                            revolucionario con optimismo cauteloso. Pero pronto aparecieron señales preocupantes: 
+                            restricciones a libertades, persecución de opositores, radicalización ideológica. 
+                            El Diario comenzó a cuestionar el rumbo.
+                        </p>
+                        <p>
+                            1960 fue el año fatal. La presión gubernamental sobre el Diario aumentó dramáticamente. 
+                            José Ignacio Rivero Alonso se negó a cambiar la línea editorial independiente. 
+                            Turbas organizadas rodeaban el edificio. Amenazas se multiplicaban. El gobierno 
+                            exigía sumisión.
+                        </p>
+                        <p>
+                            El 12 de mayo de 1960, el gobierno confiscó el Diario de la Marina. 128 años de 
+                            historia periodística terminaron. El personal fue expulsado, los Rivero al exilio, 
+                            el archivo histórico quedó en manos del estado. Cuba perdió su voz periodística 
+                            más importante y longeva.
+                        </p>
+                    </div>
+                    <div class="epoch-highlights">
+                        <h3>Momentos Clave de la Época:</h3>
+                        <ul>
+                            <li>1952: Golpe de Batista, el Diario mantiene posición crítica</li>
+                            <li>1953-1958: Cobertura de la lucha contra Batista</li>
+                            <li>1959: Triunfo revolucionario, optimismo inicial</li>
+                            <li>1959-1960: Tensión creciente con nuevo gobierno</li>
+                            <li>Mayo 1960: Presión máxima, turbas rodean el edificio</li>
+                            <li>12 Mayo 1960: Confiscación, cierre definitivo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Timeline Visual -->
+        <div class="timeline-visual">
+            <h2>Línea de Tiempo: Hitos Fundamentales</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1832</span>
+                        <h3>Fundación</h3>
+                        <p>Nace como boletín de noticias marítimas y comerciales en La Habana colonial.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1857</span>
+                        <h3>Diario de la Marina</h3>
+                        <p>Adopta el nombre definitivo que lo acompañará durante más de un siglo.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1890s</span>
+                        <h3>Familia Rivero</h3>
+                        <p>José Ignacio Rivero adquiere el periódico e inicia su transformación profunda.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1902</span>
+                        <h3>República de Cuba</h3>
+                        <p>Con la independencia, el Diario se reinventa como voz de la nueva nación.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1919</span>
+                        <h3>Segunda Generación</h3>
+                        <p>José Ignacio Rivero Alonso asume dirección. Comienza la época dorada.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1940s</span>
+                        <h3>Apogeo</h3>
+                        <p>Circulación récord, periodistas legendarios, influencia máxima. Edad de oro.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1959</span>
+                        <h3>Revolución</h3>
+                        <p>Triunfo revolucionario. Optimismo inicial pronto se convierte en tensión.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="timeline-year">1960</span>
+                        <h3>Cierre Definitivo</h3>
+                        <p>12 de mayo: confiscación gubernamental. Fin de 128 años de periodismo libre.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2>El Diario en Números</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">128</span>
+                    <span class="stat-label">Años de publicación ininterrumpida</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">120K</span>
+                    <span class="stat-label">Circulación diaria en su apogeo (1940s)</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Periodistas de élite pasaron por sus redacciones</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">46,720</span>
+                    <span class="stat-label">Ediciones publicadas aproximadamente</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Transformaciones -->
+        <div class="transformations">
+            <h2>Transformaciones del Diario</h2>
+            <div class="transformation-grid">
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">📋</span>
+                    <h3>De Boletín a Periódico</h3>
+                    <p>
+                        Comenzó como simple boletín comercial marítimo. Los Rivero lo transformaron 
+                        en periódico completo: política, cultura, sociedad, deportes, internacionales.
+                    </p>
+                </div>
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">🇪🇸➡️🇨🇺</span>
+                    <h3>De Español a Cubano</h3>
+                    <p>
+                        Nació como periódico de y para españoles en Cuba. Se cubanizó gradualmente, 
+                        especialmente tras la independencia. Mantuvo raíces hispanas pero alma cubana.
+                    </p>
+                </div>
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">🏛️</span>
+                    <h3>De Comercial a Cultural</h3>
+                    <p>
+                        Evolucionó de enfoque puramente comercial a institución cultural. Sus suplementos 
+                        literarios fueron plataforma para los mejores escritores cubanos.
+                    </p>
+                </div>
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">🗺️</span>
+                    <h3>De Local a Nacional</h3>
+                    <p>
+                        Pasó de periódico habanero a cobertura nacional. Red de corresponsales en 
+                        todas las provincias. Se leía en toda Cuba.
+                    </p>
+                </div>
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">⚙️</span>
+                    <h3>Modernización Tecnológica</h3>
+                    <p>
+                        De prensas manuales primitivas a rotativas modernas de alta velocidad. 
+                        Adoptó cada innovación tecnológica del periodismo del siglo XX.
+                    </p>
+                </div>
+                
+                <div class="transformation-card">
+                    <span class="transformation-icon">📣</span>
+                    <h3>De Observador a Protagonista</h3>
+                    <p>
+                        Comenzó reportando eventos. Terminó influyendo en ellos. El Diario se convirtió 
+                        en actor político y cultural, no solo testigo.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Legacy Quote -->
+        <div class="legacy-quote">
+            <blockquote>
+                "El Diario de la Marina fue más que un periódico. Fue el diario de Cuba misma: 
+                su memoria, su conciencia, su voz. Durante 128 años, cada mañana, los cubanos 
+                abrían sus páginas y encontraban no solo noticias, sino a Cuba pensándose a sí misma."
+                <cite>— Historiador del periodismo cubano</cite>
+            </blockquote>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora Más sobre el Diario de la Marina</h3>
+            <p>Descubre las personas y momentos que hicieron historia</p>
+            <div class="cta-buttons">
+                <a href="index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="periodistas-legendarios.html" class="btn btn-secondary">Periodistas Legendarios →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p><a href="index.html">Inicio</a> • <a href="#">Historia</a> • <a href="#">Archivo</a> • <a href="#">Contacto</a></p>
+    </footer>
+    
+</body>
+</html>

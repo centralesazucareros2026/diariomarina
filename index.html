@@ -180,6 +180,29 @@
             margin: 10px 0;
             opacity: 0.8;
         }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -201,4 +224,111 @@
                 vida cotidiana, economía, cultura y sociedad.
             </p>
             <p>
-                Este archivo digital preserva y hace accesible este tesoro histórico para investi
+                Este archivo digital preserva y hace accesible este tesoro histórico para investigadores, 
+                estudiantes, y cualquier persona interesada en la historia de Cuba y el periodismo latinoamericano.
+            </p>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats">
+            <h3>El Diario en Números</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">128</div>
+                    <div class="stat-label">Años de publicación continua</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1832</div>
+                    <div class="stat-label">Año de fundación</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">120K</div>
+                    <div class="stat-label">Circulación diaria en su apogeo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1960</div>
+                    <div class="stat-label">Año de cierre forzado</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Secciones Principales -->
+        <div class="sections-grid">
+            
+            <div class="section-card">
+                <h3>📜 Historia Completa</h3>
+                <p>
+                    Recorre 128 años de historia cubana a través del periódico que lo documentó todo: 
+                    desde la colonia española hasta la revolución de 1959. Cuatro grandes épocas que 
+                    definieron a Cuba y al Diario.
+                </p>
+                <a href="historia-completa.html">Explorar Historia →</a>
+            </div>
+            
+            <div class="section-card">
+                <h3>👨‍👨‍👦 La Familia Rivero</h3>
+                <p>
+                    La dinastía periodística que dirigió el Diario durante generaciones. José Ignacio 
+                    Rivero y su hijo José Ignacio Rivero Alonso sacrificaron todo por defender la 
+                    libertad de prensa.
+                </p>
+                <a href="familia-rivero.html">Conocer la Dinastía →</a>
+            </div>
+            
+            <div class="section-card">
+                <h3>✍️ Periodistas Legendarios</h3>
+                <p>
+                    Gastón Baquero, Jorge Mañach, y otros periodistas que convirtieron al Diario en 
+                    escuela de excelencia. Las plumas que escribieron la historia de Cuba con maestría 
+                    literaria y rigor periodístico.
+                </p>
+                <a href="periodistas-legendarios.html">Descubrir Periodistas →</a>
+            </div>
+            
+            <div class="section-card">
+                <h3>📰 El Cierre: 12 de Mayo 1960</h3>
+                <p>
+                    El día que se silenció la voz libre de Cuba. Después de 128 años, el gobierno 
+                    revolucionario confiscó el Diario de la Marina. El dramático final de una era.
+                </p>
+                <a href="cierre-1960.html">Ver el Último Día →</a>
+            </div>
+            
+            <div class="section-card">
+                <h3>📚 Archivo Digital</h3>
+                <p>
+                    Accede a portadas históricas, artículos emblemáticos, fotografías y documentos 
+                    que preservan la memoria del periódico más importante de Cuba. Un tesoro para 
+                    investigadores.
+                </p>
+                <a href="#">Próximamente →</a>
+            </div>
+            
+            <div class="section-card">
+                <h3>🌟 Secciones Icónicas</h3>
+                <p>
+                    "Por Cuba y por España", los suplementos culturales, las columnas legendarias. 
+                    Descubre las secciones que hicieron único al Diario de la Marina y lo convirtieron 
+                    en institución cultural.
+                </p>
+                <a href="#">Próximamente →</a>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p>
+            <a href="index.html">Inicio</a> •
+            <a href="historia-completa.html">Historia</a> •
+            <a href="familia-rivero.html">Familia Rivero</a> •
+            <a href="periodistas-legendarios.html">Periodistas</a> •
+            <a href="cierre-1960.html">El Cierre</a>
+        </p>
+    </footer>
+    
+</body>
+</html>
