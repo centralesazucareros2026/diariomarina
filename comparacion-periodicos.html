@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Diario de la Marina en Contexto - Comparación con Otros Periódicos Cubanos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+        }
+        
+        /* Intro section */
+        .intro {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .intro h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .intro p {
+            font-size: 1.2em;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        /* Periódicos comparados */
+        .newspapers-section {
+            background: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .newspapers-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 50px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .newspaper-card {
+            background: white;
+            padding: 40px;
+            margin: 40px 0;
+            border: 3px solid #8b6914;
+            position: relative;
+        }
+        
+        .newspaper-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #d4af37;
+        }
+        
+        .newspaper-name {
+            font-size: 2.2em;
+            color: #8b6914;
+            font-weight: bold;
+        }
+        
+        .newspaper-years {
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .newspaper-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .newspaper-info h3 {
+            font-size: 1.4em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .newspaper-info p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .newspaper-info ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .newspaper-info li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            font-size: 1.05em;
+        }
+        
+        .newspaper-info li::before {
+            content: '▪';
+            position: absolute;
+            left: 5px;
+            color: #8b6914;
+            font-size: 1.2em;
+        }
+        
+        /* Tabla comparativa */
+        .comparison-table {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+            overflow-x: auto;
+        }
+        
+        .comparison-table h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #8b6914 0%, #6a5010 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: left;
+            font-size: 1.2em;
+            border: 2px solid #6a5010;
+        }
+        
+        td {
+            padding: 18px 15px;
+            border: 1px solid #d4af37;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+        
+        tr:nth-child(even) {
+            background: #f4f1e8;
+        }
+        
+        tr:hover {
+            background: #fff9e6;
+        }
+        
+        .highlight-diario {
+            background: #fff3cd !important;
+            font-weight: bold;
+        }
+        
+        /* Análisis contextual */
+        .context-analysis {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .context-analysis h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .analysis-box {
+            background: rgba(244, 241, 232, 0.95);
+            padding: 35px;
+            color: #2c2c2c;
+            border-left: 5px solid #8b6914;
+        }
+        
+        .analysis-box h3 {
+            font-size: 1.6em;
+            color: #8b6914;
+            margin-bottom: 20px;
+        }
+        
+        .analysis-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        /* Quote */
+        .comparative-quote {
+            background: white;
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 4px solid #8b6914;
+            text-align: center;
+        }
+        
+        .comparative-quote blockquote {
+            font-size: 1.8em;
+            line-height: 1.7;
+            color: #1a1a1a;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .comparative-quote cite {
+            font-size: 1.1em;
+            color: #8b6914;
+            font-weight: bold;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .cta-box h3 {
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        
+        .cta-box p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #8b6914;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6a5010;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 105, 20, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #d4af37;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(139, 105, 20, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .newspaper-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .newspaper-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">El Diario en Contexto: Prensa Cubana del Siglo XX</div>
+        <div class="breadcrumb">
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> → 
+            Comparación con Otros Periódicos
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>📰 El Diario de la Marina en el Panorama Periodístico Cubano</h1>
+            <div class="lead">
+                Para comprender la verdadera dimensión del Diario de la Marina, es esencial verlo 
+                en contexto. Cuba tuvo una prensa vibrante y diversa durante la primera mitad del 
+                siglo XX. Esta página compara el Diario con otros periódicos importantes de la época, 
+                destacando similitudes, diferencias, y el rol único que cada uno jugó en la historia 
+                periodística de la isla.
+            </div>
+        </div>
+        
+        <!-- Introducción -->
+        <div class="intro">
+            <h2>🏛️ La Edad de Oro de la Prensa Cubana</h2>
+            
+            <p>
+                Entre 1900 y 1960, Cuba disfrutó de uno de los ecosistemas periodísticos más dinámicos 
+                y libres de América Latina. La Habana era una capital con docenas de periódicos diarios, 
+                semanarios, revistas especializadas, y publicaciones de todo tipo. Los cubanos tenían 
+                acceso a una diversidad de voces, perspectivas políticas, y estilos periodísticos.
+            </p>
+            
+            <p>
+                El Diario de la Marina no existía en el vacío. Competía y coexistía con otros periódicos 
+                importantes, cada uno con su propia identidad, audiencia, y línea editorial. Algunos 
+                eran rivales directos. Otros eran complementarios. Juntos, formaban un ecosistema 
+                periodístico robusto que mantenía informada a la población cubana y servía como pilar 
+                de la democracia.
+            </p>
+            
+            <p>
+                Esta diversidad terminó abruptamente en 1960, cuando el gobierno revolucionario confiscó 
+                todos los periódicos independientes. El Diario de la Marina fue solo el más prominente 
+                de los muchos medios que desaparecieron. Con ellos se fue la pluralidad informativa que 
+                había caracterizado a Cuba durante décadas.
+            </p>
+        </div>
+        
+        <!-- Periódicos principales -->
+        <div class="newspapers-section">
+            <h2>📋 Los Principales Periódicos Cubanos (1900-1960)</h2>
+            
+            <div class="newspaper-card">
+                <div class="newspaper-header">
+                    <div class="newspaper-name">El Mundo</div>
+                    <div class="newspaper-years">1901-1969</div>
+                </div>
+                <div class="newspaper-content">
+                    <div class="newspaper-info">
+                        <h3>Perfil e Identidad</h3>
+                        <p>
+                            Fundado en 1901, El Mundo fue el principal competidor del Diario de la Marina 
+                            durante gran parte del siglo XX. Se posicionó como periódico moderno, con 
+                            enfoque en noticias frescas, deportes, y crónicas policiales. Tenía un tono 
+                            más popular y accesible que el Diario.
+                        </p>
+                        <ul>
+                            <li>Orientación: Centro-izquierda, populista</li>
+                            <li>Circulación: ~80,000 ejemplares diarios en su apogeo</li>
+                            <li>Sede: La Habana, calle Zulueta</li>
+                            <li>Audiencia: Clase media urbana, trabajadores</li>
+                        </ul>
+                    </div>
+                    <div class="newspaper-info">
+                        <h3>Características Distintivas</h3>
+                        <p>
+                            El Mundo se destacó por su cobertura deportiva excepcional, especialmente 
+                            de béisbol. También innovó en diseño gráfico y uso de fotografía. Sobrevivió 
+                            al cierre de 1960 porque se alineó con el gobierno revolucionario, pero 
+                            cerró definitivamente en 1969.
+                        </p>
+                        <ul>
+                            <li>Fuerte en deportes y crónica roja</li>
+                            <li>Estilo más ágil y moderno que el Diario</li>
+                            <li>Competidor directo en circulación</li>
+                            <li>Se adaptó al régimen revolucionario temporalmente</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newspaper-card">
+                <div class="newspaper-header">
+                    <div class="newspaper-name">Diario de la Marina</div>
+                    <div class="newspaper-years">1832-1960</div>
+                </div>
+                <div class="newspaper-content">
+                    <div class="newspaper-info">
+                        <h3>Perfil e Identidad</h3>
+                        <p>
+                            El periódico más antiguo y prestigioso de Cuba. Comenzó como boletín 
+                            comercial marítimo y evolucionó hasta convertirse en el diario de 
+                            referencia de la isla. Bajo la dirección de la familia Rivero, alcanzó 
+                            estándares de excelencia periodística y literaria sin paralelo.
+                        </p>
+                        <ul>
+                            <li>Orientación: Conservador, pro-democracia</li>
+                            <li>Circulación: ~120,000 ejemplares diarios (1950s)</li>
+                            <li>Sede: La Habana, Prado y Teniente Rey</li>
+                            <li>Audiencia: Todas las clases, especialmente élites</li>
+                        </ul>
+                    </div>
+                    <div class="newspaper-info">
+                        <h3>Características Distintivas</h3>
+                        <p>
+                            Mayor longevidad (128 años), circulación más alta, periodistas de mayor 
+                            calibre, suplementos culturales legendarios. Referente de periodismo 
+                            serio y literatura. Confiscado en 1960 por oposición al gobierno 
+                            revolucionario.
+                        </p>
+                        <ul>
+                            <li>Periodismo de más alta calidad en Cuba</li>
+                            <li>Plataforma para los mejores escritores cubanos</li>
+                            <li>Institución cultural, no solo periódico</li>
+                            <li>Símbolo de libertad de prensa confiscado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newspaper-card">
+                <div class="newspaper-header">
+                    <div class="newspaper-name">El País</div>
+                    <div class="newspaper-years">1921-1960</div>
+                </div>
+                <div class="newspaper-content">
+                    <div class="newspaper-info">
+                        <h3>Perfil e Identidad</h3>
+                        <p>
+                            Periódico vespertino fundado en 1921. Se enfocó en noticias de última 
+                            hora, análisis político, y cobertura internacional. Tuvo una línea 
+                            editorial progresista y se caracterizó por columnistas políticos 
+                            influyentes.
+                        </p>
+                        <ul>
+                            <li>Orientación: Liberal-progresista</li>
+                            <li>Circulación: ~40,000 ejemplares</li>
+                            <li>Sede: La Habana</li>
+                            <li>Audiencia: Intelectuales, profesionales</li>
+                        </ul>
+                    </div>
+                    <div class="newspaper-info">
+                        <h3>Características Distintivas</h3>
+                        <p>
+                            Como vespertino, complementaba a los matutinos. Fuerte en análisis 
+                            político y opinión. Menos circulación que Diario o El Mundo, pero 
+                            muy influyente. Confiscado en 1960.
+                        </p>
+                        <ul>
+                            <li>Horario vespertino (tarde)</li>
+                            <li>Análisis político profundo</li>
+                            <li>Columnistas políticos destacados</li>
+                            <li>Menos masivo, más de élite</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newspaper-card">
+                <div class="newspaper-header">
+                    <div class="newspaper-name">Información</div>
+                    <div class="newspaper-years">1925-1960</div>
+                </div>
+                <div class="newspaper-content">
+                    <div class="newspaper-info">
+                        <h3>Perfil e Identidad</h3>
+                        <p>
+                            Fundado en 1925, Información se posicionó como periódico moderno y 
+                            dinámico. Adoptó rápidamente nuevas tecnologías de impresión y diseño. 
+                            Se enfocó en noticias locales, crónicas sociales, y entretenimiento.
+                        </p>
+                        <ul>
+                            <li>Orientación: Moderado, apolítico en apariencia</li>
+                            <li>Circulación: ~50,000 ejemplares</li>
+                            <li>Sede: La Habana</li>
+                            <li>Audiencia: Clase media, mujeres</li>
+                        </ul>
+                    </div>
+                    <div class="newspaper-info">
+                        <h3>Características Distintivas</h3>
+                        <p>
+                            Secciones sociales y de entretenimiento muy leídas. Menos político 
+                            que otros periódicos. Innovador en uso de fotografía y diseño gráfico. 
+                            Confiscado en 1960.
+                        </p>
+                        <ul>
+                            <li>Fuerte en crónica social</li>
+                            <li>Diseño moderno y atractivo</li>
+                            <li>Menos énfasis en política profunda</li>
+                            <li>Popular entre audiencia femenina</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="newspaper-card">
+                <div class="newspaper-header">
+                    <div class="newspaper-name">Prensa Libre</div>
+                    <div class="newspaper-years">1941-1960</div>
+                </div>
+                <div class="newspaper-content">
+                    <div class="newspaper-info">
+                        <h3>Perfil e Identidad</h3>
+                        <p>
+                            Fundado en 1941 por Sergio Carbó, periodista prestigioso. Se caracterizó 
+                            por su independencia editorial y posiciones anti-corrupción. Investigó 
+                            escándalos políticos y denunció abusos de poder.
+                        </p>
+                        <ul>
+                            <li>Orientación: Independiente, reformista</li>
+                            <li>Circulación: ~35,000 ejemplares</li>
+                            <li>Sede: La Habana</li>
+                            <li>Audiencia: Lectores críticos del gobierno</li>
+                        </ul>
+                    </div>
+                    <div class="newspaper-info">
+                        <h3>Características Distintivas</h3>
+                        <p>
+                            Periodismo de investigación agresivo. Denunció corrupción bajo Batista. 
+                            Inicialmente apoyó la Revolución de 1959 pero se distanció rápidamente. 
+                            Confiscado en 1960.
+                        </p>
+                        <ul>
+                            <li>Periodismo de investigación destacado</li>
+                            <li>Postura anti-corrupción fuerte</li>
+                            <li>Independiente de intereses políticos</li>
+                            <li>Crítico tanto de Batista como de Castro</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabla comparativa -->
+        <div class="comparison-table">
+            <h2>📊 Comparación Directa: Características Clave</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Diario de la Marina</th>
+                        <th>El Mundo</th>
+                        <th>El País</th>
+                        <th>Información</th>
+                        <th>Prensa Libre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fundación</strong></td>
+                        <td class="highlight-diario">1832</td>
+                        <td>1901</td>
+                        <td>1921</td>
+                        <td>1925</td>
+                        <td>1941</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Longevidad</strong></td>
+                        <td class="highlight-diario">128 años</td>
+                        <td>68 años</td>
+                        <td>39 años</td>
+                        <td>35 años</td>
+                        <td>19 años</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Circulación Máxima</strong></td>
+                        <td class="highlight-diario">~120,000</td>
+                        <td>~80,000</td>
+                        <td>~40,000</td>
+                        <td>~50,000</td>
+                        <td>~35,000</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Orientación Política</strong></td>
+                        <td class="highlight-diario">Conservador</td>
+                        <td>Centro-izquierda</td>
+                        <td>Liberal</td>
+                        <td>Moderado</td>
+                        <td>Independiente</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fortaleza Principal</strong></td>
+                        <td class="highlight-diario">Calidad editorial y cultural</td>
+                        <td>Deportes y noticias populares</td>
+                        <td>Análisis político</td>
+                        <td>Crónica social</td>
+                        <td>Investigación</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Audiencia Objetivo</strong></td>
+                        <td class="highlight-diario">Todas las clases</td>
+                        <td>Clase media-trabajadora</td>
+                        <td>Intelectuales</td>
+                        <td>Clase media</td>
+                        <td>Críticos del poder</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suplemento Cultural</strong></td>
+                        <td class="highlight-diario">Legendario</td>
+                        <td>Moderado</td>
+                        <td>Bueno</td>
+                        <td>Limitado</td>
+                        <td>Limitado</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Destino en 1960</strong></td>
+                        <td class="highlight-diario">Confiscado 12 mayo</td>
+                        <td>Sobrevivió hasta 1969</td>
+                        <td>Confiscado 1960</td>
+                        <td>Confiscado 1960</td>
+                        <td>Confiscado 1960</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Análisis contextual -->
+        <div class="context-analysis">
+            <h2>🔍 Análisis: El Rol Único del Diario de la Marina</h2>
+            
+            <div class="analysis-grid">
+                <div class="analysis-box">
+                    <h3>⏰ Longevidad Sin Paralelo</h3>
+                    <p>
+                        Con 128 años de publicación continua, el Diario de la Marina no solo era 
+                        el periódico más antiguo de Cuba, sino uno de los más longevos de toda 
+                        América Latina. Esta continuidad le dio una autoridad histórica que ningún 
+                        otro medio cubano podía igualar. El Diario había vivido toda la historia 
+                        moderna de Cuba: colonia, independencia, república, revoluciones.
+                    </p>
+                </div>
+                
+                <div class="analysis-box">
+                    <h3>📈 Circulación Dominante</h3>
+                    <p>
+                        Con 120,000 ejemplares diarios en su apogeo, el Diario superaba 
+                        significativamente a todos sus competidores. Esta circulación masiva no 
+                        solo significaba más lectores, sino también más influencia, más ingresos 
+                        por publicidad, y más recursos para invertir en periodismo de calidad. 
+                        El Diario era el líder indiscutible del mercado periodístico cubano.
+                    </p>
+                </div>
+                
+                <div class="analysis-box">
+                    <h3>✍️ Calidad Editorial Superior</h3>
+                    <p>
+                        Mientras otros periódicos competían por noticias sensacionales o deportes, 
+                        el Diario mantuvo estándares editoriales excepcionales. Sus periodistas eran 
+                        los mejor pagados, sus columnistas los más prestigiosos, sus suplementos 
+                        culturales los más leídos. El Diario era escuela de periodismo: trabajar 
+                        allí era la cumbre de la profesión en Cuba.
+                    </p>
+                </div>
+                
+                <div class="analysis-box">
+                    <h3>🎭 Plataforma Cultural</h3>
+                    <p>
+                        Ningún otro periódico cubano igualó al Diario como plataforma literaria 
+                        y cultural. Gastón Baquero, Jorge Mañach, y otros intelectuales cubanos 
+                        de primer nivel escribían regularmente en sus páginas. Los suplementos 
+                        culturales del Diario eran eventos literarios esperados semanalmente. 
+                        Era periódico y revista cultural a la vez.
+                    </p>
+                </div>
+                
+                <div class="analysis-box">
+                    <h3>🏛️ Institución Nacional</h3>
+                    <p>
+                        El Diario de la Marina trascendió su función periodística para convertirse 
+                        en institución nacional. No era solo un negocio o medio de comunicación. 
+                        Era símbolo de la tradición periodística cubana, guardián de la memoria 
+                        histórica, voz de referencia en momentos críticos. Otros periódicos eran 
+                        importantes; el Diario era imprescindible.
+                    </p>
+                </div>
+                
+                <div class="analysis-box">
+                    <h3>💔 El Vacío Irreemplazable</h3>
+                    <p>
+                        Cuando el gobierno revolucionario confiscó todos los periódicos independientes 
+                        en 1960, Cuba perdió una prensa plural y vibrante. Pero la pérdida del Diario 
+                        de la Marina fue especialmente devastadora. No solo desapareció el periódico 
+                        de mayor circulación, sino la institución periodística más prestigiosa, la 
+                        escuela de excelencia, el archivo histórico más completo. Un vacío que jamás 
+                        se llenó.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quote comparativo -->
+        <div class="comparative-quote">
+            <blockquote>
+                "Cuba tenía excelentes periódicos en la primera mitad del siglo XX. El Mundo era 
+                dinámico, Prensa Libre era valiente, Información era moderno. Pero el Diario de 
+                la Marina era único. No solo informaba: educaba, elevaba, preservaba. No era el 
+                mejor periódico cubano. Era Cuba misma en papel."
+            </blockquote>
+            <cite>— Historiador del periodismo cubano</cite>
+        </div>
+        
+        <!-- Conclusión -->
+        <div class="intro">
+            <h2>🌟 Legado Comparativo</h2>
+            
+            <p>
+                La comparación con otros periódicos cubanos no disminuye al Diario de la Marina. 
+                Al contrario, lo sitúa en su verdadero contexto y destaca su excepcionalidad. Cuba 
+                tuvo una prensa rica y diversa. El Mundo, El País, Información, Prensa Libre, y 
+                otros cumplieron roles importantes y contribuyeron al ecosistema periodístico de la 
+                isla.
+            </p>
+            
+            <p>
+                Pero el Diario de la Marina fue algo más. Su longevidad incomparable, su circulación 
+                dominante, su calidad editorial superior, su rol como plataforma cultural, y su 
+                estatus como institución nacional lo colocaron en una categoría aparte. No era 
+                simplemente el periódico más importante de Cuba. Era el símbolo viviente del 
+                periodismo libre cubano.
+            </p>
+            
+            <p>
+                Por eso su confiscación en 1960 fue tan traumática. No solo cerró un periódico. 
+                Cerró una época. Otros medios también desaparecieron, y cada pérdida dolió. Pero 
+                la del Diario de la Marina fue la más profunda porque representaba todo lo que 
+                Cuba había logrado construir en periodismo durante más de un siglo: excelencia, 
+                libertad, tradición, influencia cultural.
+            </p>
+            
+            <p>
+                Hoy, al estudiar la historia del periodismo cubano, es imposible no ver al Diario 
+                de la Marina como el pináculo de esa tradición. Los demás periódicos fueron 
+                importantes y valiosos. El Diario fue irreemplazable.
+            </p>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora Más sobre el Diario de la Marina</h3>
+            <p>Descubre la historia completa del periódico más importante de Cuba</p>
+            <div class="cta-buttons">
+                <a href="https://historiadeldiariodelamarinadecuba.com/index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html" class="btn btn-secondary">Historia Completa →</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/recursos-educativos.html" class="btn btn-secondary">Recursos Educativos →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p>
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html">Historia</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/familia-rivero.html">Familia Rivero</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/periodistas-legendarios.html">Periodistas</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/cierre-1960.html">El Cierre</a>
+        </p>
+    </footer>
+    
+</body>
+</html>

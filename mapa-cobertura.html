@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Cobertura - Diario de la Marina</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+        }
+        
+        /* Mapa de Cuba */
+        .cuba-map-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .cuba-map-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .map-container {
+            position: relative;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #e8f4f8;
+            padding: 40px;
+            border: 3px solid #8b6914;
+        }
+        
+        .map-visual {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #e8f4f8 100%);
+            border: 2px solid #555;
+            overflow: hidden;
+        }
+        
+        /* Cuba shape aproximado */
+        .cuba-shape {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 30%;
+            background: #c8a882;
+            border-radius: 100px 50px 50px 30px;
+            border: 3px solid #8b6914;
+        }
+        
+        /* Marcadores de ciudades */
+        .location-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #8b6914;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            border: 3px solid white;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        
+        .location-marker:hover {
+            transform: rotate(-45deg) scale(1.5);
+            background: #d4af37;
+        }
+        
+        .marker-label {
+            position: absolute;
+            background: rgba(26, 26, 26, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid #8b6914;
+        }
+        
+        .location-marker:hover .marker-label {
+            opacity: 1;
+        }
+        
+        /* Posiciones específicas de ciudades */
+        .havana-marker { top: 45%; left: 25%; }
+        .matanzas-marker { top: 40%; left: 35%; }
+        .cienfuegos-marker { top: 55%; left: 42%; }
+        .camaguey-marker { top: 50%; left: 60%; }
+        .santiago-marker { top: 55%; left: 85%; }
+        .pinar-marker { top: 45%; left: 10%; }
+        .sancti-marker { top: 52%; left: 52%; }
+        
+        /* Lista de ubicaciones */
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .location-card {
+            background: #f4f1e8;
+            padding: 30px;
+            border-left: 6px solid #8b6914;
+        }
+        
+        .location-card h3 {
+            font-size: 1.6em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .location-card p {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        .location-badge {
+            display: inline-block;
+            background: #8b6914;
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.9em;
+            margin-top: 15px;
+            border-radius: 3px;
+        }
+        
+        /* Red de corresponsales */
+        .correspondents-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .correspondents-section h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .correspondents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .correspondent-box {
+            background: rgba(244, 241, 232, 0.95);
+            padding: 35px;
+            color: #2c2c2c;
+            border-left: 5px solid #8b6914;
+        }
+        
+        .correspondent-box h3 {
+            font-size: 1.6em;
+            color: #8b6914;
+            margin-bottom: 20px;
+        }
+        
+        .correspondent-box p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .correspondent-box ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        
+        .correspondent-box li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            font-size: 1.05em;
+        }
+        
+        .correspondent-box li::before {
+            content: '📍';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Distribución */
+        .distribution {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .distribution h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .distribution-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 40px 30px;
+            background: #f4f1e8;
+            border: 3px solid #8b6914;
+        }
+        
+        .stat-number {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #8b6914;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .stat-label {
+            font-size: 1.2em;
+            color: #555;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .cta-box h3 {
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        
+        .cta-box p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #8b6914;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6a5010;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 105, 20, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #d4af37;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(139, 105, 20, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .map-visual {
+                height: 300px;
+            }
+            
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .correspondents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .distribution-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">Mapa de Cobertura y Distribución</div>
+        <div class="breadcrumb">
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> → 
+            Mapa de Cobertura
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🗺️ La Red Nacional del Diario de la Marina</h1>
+            <div class="lead">
+                Aunque el Diario de la Marina se publicaba en La Habana, su alcance era nacional. 
+                Una extensa red de corresponsales, distribuidores, y puntos de venta cubría toda 
+                Cuba. Este mapa ilustra la presencia del periódico más importante de la isla en 
+                provincias, ciudades, y pueblos a lo largo de 128 años.
+            </div>
+        </div>
+        
+        <!-- Mapa de Cuba -->
+        <div class="cuba-map-section">
+            <h2>🎯 Presencia del Diario en Cuba</h2>
+            
+            <div class="map-container">
+                <div class="map-visual">
+                    <div class="cuba-shape"></div>
+                    
+                    <!-- Marcadores de ciudades principales -->
+                    <div class="location-marker havana-marker">
+                        <div class="marker-label">La Habana - Sede Central</div>
+                    </div>
+                    
+                    <div class="location-marker pinar-marker">
+                        <div class="marker-label">Pinar del Río</div>
+                    </div>
+                    
+                    <div class="location-marker matanzas-marker">
+                        <div class="marker-label">Matanzas</div>
+                    </div>
+                    
+                    <div class="location-marker cienfuegos-marker">
+                        <div class="marker-label">Cienfuegos</div>
+                    </div>
+                    
+                    <div class="location-marker sancti-marker">
+                        <div class="marker-label">Sancti Spíritus</div>
+                    </div>
+                    
+                    <div class="location-marker camaguey-marker">
+                        <div class="marker-label">Camagüey</div>
+                    </div>
+                    
+                    <div class="location-marker santiago-marker">
+                        <div class="marker-label">Santiago de Cuba</div>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 20px; font-style: italic; color: #666;">
+                    Pasa el cursor sobre los marcadores para ver las ciudades principales
+                </p>
+            </div>
+            
+            <!-- Lista detallada de ubicaciones -->
+            <div class="locations-grid">
+                <div class="location-card">
+                    <h3>🏛️ La Habana</h3>
+                    <p>
+                        Sede central del Diario de la Marina en Paseo del Prado esquina Teniente Rey. 
+                        Aquí estaban la redacción principal, las rotativas, el archivo histórico, y 
+                        todas las operaciones centrales. Desde La Habana se coordinaba la distribución 
+                        a toda Cuba.
+                    </p>
+                    <span class="location-badge">Sede Central • 1832-1960</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Pinar del Río</h3>
+                    <p>
+                        La provincia occidental tenía corresponsal permanente y múltiples puntos de 
+                        distribución. El Diario cubría la importante industria tabacalera de Vuelta 
+                        Abajo y la vida política regional.
+                    </p>
+                    <span class="location-badge">Corresponsalía Provincial</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Matanzas</h3>
+                    <p>
+                        Ciudad importante por su puerto y desarrollo comercial. El Diario tenía fuerte 
+                        presencia con corresponsal, distribuidores, y lectores entre las élites 
+                        azucareras y comerciales de la región.
+                    </p>
+                    <span class="location-badge">Corresponsalía Provincial</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Cienfuegos</h3>
+                    <p>
+                        Puerto importante del sur de Cuba. El Diario circulaba ampliamente en esta 
+                        ciudad cosmopolita, con lectores entre comerciantes, profesionales, y la 
+                        comunidad de origen español.
+                    </p>
+                    <span class="location-badge">Punto de Distribución</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Sancti Spíritus</h3>
+                    <p>
+                        Ciudad del centro de Cuba donde el Diario tenía distribución regular. 
+                        Cubría acontecimientos regionales y servía a lectores en ciudades cercanas 
+                        como Trinidad.
+                    </p>
+                    <span class="location-badge">Distribución Regional</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Camagüey</h3>
+                    <p>
+                        Tercera ciudad más importante de Cuba. Corresponsal permanente cubría la 
+                        provincia ganadera más grande. Circulación significativa entre terratenientes 
+                        y élites urbanas.
+                    </p>
+                    <span class="location-badge">Corresponsalía Provincial</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Santiago de Cuba</h3>
+                    <p>
+                        Segunda ciudad de Cuba y capital del oriente. El Diario mantenía corresponsal 
+                        permanente, oficina de distribución, y circulación robusta. Esencial para 
+                        cobertura nacional.
+                    </p>
+                    <span class="location-badge">Corresponsalía Mayor</span>
+                </div>
+                
+                <div class="location-card">
+                    <h3>🌴 Otras Provincias</h3>
+                    <p>
+                        El Diario también circulaba en Villa Clara, Holguín, Guantánamo, y prácticamente 
+                        todos los municipios importantes de Cuba, ya sea con corresponsales locales o 
+                        distribuidores regulares.
+                    </p>
+                    <span class="location-badge">Cobertura Nacional</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Red de corresponsales -->
+        <div class="correspondents-section">
+            <h2>✍️ La Red de Corresponsales</h2>
+            
+            <div class="correspondents-grid">
+                <div class="correspondent-box">
+                    <h3>Corresponsales Provinciales</h3>
+                    <p>
+                        El Diario de la Marina mantenía corresponsales permanentes en cada provincia 
+                        de Cuba. Estos periodistas locales cubrían política regional, economía, 
+                        eventos sociales, y noticias de interés provincial.
+                    </p>
+                    <p>
+                        Los corresponsales provinciales enviaban sus crónicas diariamente a La Habana 
+                        por telégrafo primero, luego por teléfono, y finalmente por teletipo en las 
+                        décadas finales.
+                    </p>
+                    <ul>
+                        <li>Pinar del Río</li>
+                        <li>Matanzas</li>
+                        <li>Las Villas (Santa Clara)</li>
+                        <li>Camagüey</li>
+                        <li>Oriente (Santiago de Cuba)</li>
+                    </ul>
+                </div>
+                
+                <div class="correspondent-box">
+                    <h3>Corresponsales Municipales</h3>
+                    <p>
+                        Además de corresponsales provinciales, el Diario tenía una red de 
+                        corresponsales en ciudades y pueblos importantes. Estos "corresponsales 
+                        locales" reportaban eventos significativos de sus comunidades.
+                    </p>
+                    <p>
+                        Esta red extensa permitía al Diario ofrecer cobertura verdaderamente 
+                        nacional, no solo de las capitales provinciales sino de Cuba entera.
+                    </p>
+                    <ul>
+                        <li>Ciudades azucareras</li>
+                        <li>Puertos comerciales</li>
+                        <li>Centros turísticos (Varadero, Trinidad)</li>
+                        <li>Pueblos importantes</li>
+                    </ul>
+                </div>
+                
+                <div class="correspondent-box">
+                    <h3>Corresponsales Internacionales</h3>
+                    <p>
+                        El Diario también mantenía corresponsales en el extranjero, principalmente 
+                        en España, Estados Unidos, y otras capitales latinoamericanas. Esto le 
+                        permitía ofrecer cobertura internacional de primera mano.
+                    </p>
+                    <p>
+                        Los corresponsales en Madrid, Nueva York, y Washington D.C. eran especialmente 
+                        importantes, enviando crónicas sobre política, cultura, y eventos que afectaban 
+                        a Cuba.
+                    </p>
+                    <ul>
+                        <li>Madrid, España</li>
+                        <li>Nueva York, Estados Unidos</li>
+                        <li>Washington D.C., Estados Unidos</li>
+                        <li>Otras capitales latinoamericanas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Distribución -->
+        <div class="distribution">
+            <h2>🚚 Sistema de Distribución Nacional</h2>
+            
+            <p style="font-size: 1.2em; line-height: 1.9; text-align: justify; max-width: 900px; margin: 0 auto 40px;">
+                El Diario de la Marina no solo se vendía en La Habana. Su sistema de distribución 
+                aseguraba que cada mañana, ejemplares frescos llegaran a provincias, ciudades, 
+                pueblos, y hasta zonas rurales de Cuba. Este sistema logístico era una hazaña 
+                en la época pre-digital.
+            </p>
+            
+            <div class="distribution-stats">
+                <div class="stat-box">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Provincias Cubiertas</span>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Ciudades con Distribución Regular</span>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-label">Puntos de Venta en toda Cuba</span>
+                </div>
+                
+                <div class="stat-box">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Cobertura Nacional</span>
+                </div>
+            </div>
+            
+            <div style="background: #f4f1e8; padding: 40px; margin-top: 50px; border-left: 6px solid #8b6914;">
+                <h3 style="font-size: 1.8em; color: #8b6914; margin-bottom: 20px;">Cómo Funcionaba la Distribución</h3>
+                
+                <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                    <strong>1. Impresión Madrugadora:</strong> Las rotativas del Diario funcionaban 
+                    desde las 2-3 AM para tener ejemplares listos al amanecer.
+                </p>
+                
+                <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                    <strong>2. Carga y Transporte:</strong> Camiones partían del edificio en Prado 
+                    y Teniente Rey hacia diferentes rutas: hacia el oeste (Pinar del Río), hacia 
+                    el este (Matanzas, Las Villas, Camagüey, Oriente), y hacia el sur.
+                </p>
+                
+                <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                    <strong>3. Distribuidores Locales:</strong> En cada provincia y ciudad, 
+                    distribuidores locales recibían los ejemplares y los repartían a quioscos, 
+                    tiendas, vendedores ambulantes.
+                </p>
+                
+                <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                    <strong>4. Suscripciones a Domicilio:</strong> El Diario también tenía servicio 
+                    de suscripción con entrega a domicilio en las principales ciudades, especialmente 
+                    La Habana.
+                </p>
+                
+                <p style="font-size: 1.1em; line-height: 1.8;">
+                    <strong>5. Coordinación por Teléfono/Telégrafo:</strong> La distribución se 
+                    coordinaba por teléfono y telégrafo. Los distribuidores reportaban ventas y 
+                    pedían más ejemplares según demanda local.
+                </p>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora Más sobre el Diario de la Marina</h3>
+            <p>Descubre cómo el periódico más importante de Cuba alcanzó a toda la nación</p>
+            <div class="cta-buttons">
+                <a href="https://historiadeldiariodelamarinadecuba.com/index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html" class="btn btn-secondary">Historia Completa →</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/el-edificio.html" class="btn btn-secondary">El Edificio →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p>
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html">Historia</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/familia-rivero.html">Familia Rivero</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/periodistas-legendarios.html">Periodistas</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/cierre-1960.html">El Cierre</a>
+        </p>
+    </footer>
+    
+</body>
+</html>

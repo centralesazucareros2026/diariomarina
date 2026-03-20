@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos Educativos - Diario de la Marina</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+        }
+        
+        /* Audiencias */
+        .audiences {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .audience-card {
+            background: white;
+            padding: 35px;
+            border: 3px solid #8b6914;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .audience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 105, 20, 0.3);
+        }
+        
+        .audience-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .audience-card h3 {
+            font-size: 1.8em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .audience-card p {
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        
+        /* Recursos por nivel */
+        .resources-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .resources-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .resource-level {
+            background: #f4f1e8;
+            padding: 40px;
+            margin: 40px 0;
+            border-left: 6px solid #8b6914;
+        }
+        
+        .resource-level h3 {
+            font-size: 2em;
+            color: #8b6914;
+            margin-bottom: 25px;
+        }
+        
+        .resource-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .resource-item {
+            background: white;
+            padding: 20px 25px;
+            margin: 15px 0;
+            border: 2px solid #d4af37;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .resource-item-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+        
+        .resource-item-content h4 {
+            font-size: 1.3em;
+            color: #8b6914;
+            margin-bottom: 8px;
+        }
+        
+        .resource-item-content p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        /* Guías de estudio */
+        .study-guides {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .study-guides h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .guide-card {
+            background: rgba(244, 241, 232, 0.95);
+            padding: 35px;
+            color: #2c2c2c;
+            border-left: 5px solid #8b6914;
+        }
+        
+        .guide-card h3 {
+            font-size: 1.6em;
+            color: #8b6914;
+            margin-bottom: 20px;
+        }
+        
+        .guide-topics {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .guide-topics li {
+            padding: 10px 0 10px 25px;
+            position: relative;
+            border-bottom: 1px solid #d4af37;
+            font-size: 1.05em;
+        }
+        
+        .guide-topics li::before {
+            content: '📖';
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Actividades */
+        .activities {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .activities h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .activity-card {
+            background: #f4f1e8;
+            padding: 35px;
+            margin: 30px 0;
+            border: 3px solid #d4af37;
+        }
+        
+        .activity-card h3 {
+            font-size: 1.8em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .activity-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #666;
+        }
+        
+        .activity-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-description {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .activity-objectives {
+            background: white;
+            padding: 20px;
+            border-left: 4px solid #8b6914;
+        }
+        
+        .activity-objectives h4 {
+            font-size: 1.2em;
+            color: #8b6914;
+            margin-bottom: 10px;
+        }
+        
+        .activity-objectives ul {
+            padding-left: 25px;
+        }
+        
+        .activity-objectives li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        /* Temas de investigación */
+        .research-topics {
+            background: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .research-topics h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .topic-box {
+            background: white;
+            padding: 30px;
+            border: 2px solid #8b6914;
+        }
+        
+        .topic-box h3 {
+            font-size: 1.4em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .topic-box p {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .cta-box h3 {
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        
+        .cta-box p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #8b6914;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6a5010;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 105, 20, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #d4af37;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(139, 105, 20, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .audiences {
+                grid-template-columns: 1fr;
+            }
+            
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">Recursos Educativos</div>
+        <div class="breadcrumb">
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> → 
+            Recursos Educativos
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>📚 Recursos para Profesores y Estudiantes</h1>
+            <div class="lead">
+                El archivo del Diario de la Marina es una herramienta educativa invaluable para 
+                comprender la historia de Cuba, el periodismo latinoamericano, y el papel de la 
+                prensa libre en la sociedad. Estos recursos están diseñados para facilitar el 
+                estudio y la enseñanza de este importante legado histórico.
+            </div>
+        </div>
+        
+        <!-- Audiencias -->
+        <div class="audiences">
+            <div class="audience-card">
+                <div class="audience-icon">👨‍🏫</div>
+                <h3>Profesores</h3>
+                <p>
+                    Guías de clase, actividades didácticas, y recursos pedagógicos para enseñar 
+                    sobre el Diario de la Marina, el periodismo histórico, y la Cuba del siglo XIX-XX.
+                </p>
+            </div>
+            
+            <div class="audience-card">
+                <div class="audience-icon">🎓</div>
+                <h3>Estudiantes</h3>
+                <p>
+                    Materiales de investigación, temas de ensayo, fuentes primarias, y guías de 
+                    estudio para trabajos académicos sobre historia cubana y periodismo.
+                </p>
+            </div>
+            
+            <div class="audience-card">
+                <div class="audience-icon">🔬</div>
+                <h3>Investigadores</h3>
+                <p>
+                    Metodologías de análisis, guías de citación, contexto histórico, y recursos 
+                    avanzados para investigación académica sobre el Diario y su época.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Recursos por nivel educativo -->
+        <div class="resources-section">
+            <h2>📖 Recursos por Nivel Educativo</h2>
+            
+            <div class="resource-level">
+                <h3>🏫 Secundaria (Grados 9-12)</h3>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <div class="resource-item-icon">📰</div>
+                        <div class="resource-item-content">
+                            <h4>Introducción al Periodismo Histórico</h4>
+                            <p>
+                                Lección básica sobre cómo funcionaba un periódico en el siglo XX. 
+                                Incluye comparación con medios digitales actuales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">🗺️</div>
+                        <div class="resource-item-content">
+                            <h4>Cuba en el Siglo XX: Cronología Visual</h4>
+                            <p>
+                                Timeline ilustrada de los principales eventos históricos cubiertos 
+                                por el Diario de la Marina.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">✍️</div>
+                        <div class="resource-item-content">
+                            <h4>Análisis de Portadas Históricas</h4>
+                            <p>
+                                Ejercicio de lectura crítica de portadas del Diario de diferentes épocas. 
+                                Desarrollo de pensamiento crítico sobre fuentes periodísticas.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="resource-level">
+                <h3>🎓 Universidad (Pregrado)</h3>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <div class="resource-item-icon">📚</div>
+                        <div class="resource-item-content">
+                            <h4>El Diario como Fuente Primaria</h4>
+                            <p>
+                                Guía metodológica para usar el archivo del Diario en investigación 
+                                histórica. Incluye técnicas de análisis de fuentes periodísticas.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">🏛️</div>
+                        <div class="resource-item-content">
+                            <h4>Periodismo y Política en Cuba Republicana</h4>
+                            <p>
+                                Estudio de caso sobre la relación entre prensa y poder político 
+                                en Cuba (1902-1959) usando el Diario como fuente principal.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">📊</div>
+                        <div class="resource-item-content">
+                            <h4>Análisis de Contenido y Cobertura Periodística</h4>
+                            <p>
+                                Metodologías cuantitativas y cualitativas para analizar la cobertura 
+                                del Diario sobre temas específicos a través del tiempo.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="resource-level">
+                <h3>🔬 Posgrado e Investigación</h3>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <div class="resource-item-icon">📖</div>
+                        <div class="resource-item-content">
+                            <h4>Historia del Periodismo Latinoamericano</h4>
+                            <p>
+                                El Diario de la Marina en contexto comparativo. Análisis de su rol 
+                                en la historia del periodismo de la región.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">🎭</div>
+                        <div class="resource-item-content">
+                            <h4>Cultura y Sociedad a través de la Prensa</h4>
+                            <p>
+                                Metodologías para estudiar transformaciones culturales y sociales 
+                                usando el archivo del Diario como fuente.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="resource-item">
+                        <div class="resource-item-icon">⚖️</div>
+                        <div class="resource-item-content">
+                            <h4>Libertad de Prensa y Autoritarismo</h4>
+                            <p>
+                                Estudio del cierre del Diario como caso de estudio sobre represión 
+                                de medios independientes en regímenes autoritarios.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Guías de estudio temáticas -->
+        <div class="study-guides">
+            <h2>📝 Guías de Estudio Temáticas</h2>
+            
+            <div class="guides-grid">
+                <div class="guide-card">
+                    <h3>🏛️ Historia Política de Cuba</h3>
+                    <ul class="guide-topics">
+                        <li>Las guerras de independencia (1895-1898)</li>
+                        <li>La intervención estadounidense</li>
+                        <li>Nacimiento de la República (1902)</li>
+                        <li>Dictaduras y golpes de estado</li>
+                        <li>La Revolución de 1959</li>
+                        <li>El cierre de la prensa libre (1960)</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-card">
+                    <h3>🎨 Cultura y Sociedad</h3>
+                    <ul class="guide-topics">
+                        <li>El movimiento literario cubano</li>
+                        <li>Suplementos culturales del Diario</li>
+                        <li>Teatro, música y artes visuales</li>
+                        <li>Vida cotidiana en La Habana</li>
+                        <li>Transformaciones sociales del siglo XX</li>
+                        <li>Relación España-Cuba post-independencia</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-card">
+                    <h3>💼 Economía y Comercio</h3>
+                    <ul class="guide-topics">
+                        <li>La economía azucarera cubana</li>
+                        <li>Comercio con Estados Unidos</li>
+                        <li>Desarrollo urbano de La Habana</li>
+                        <li>Crisis económicas del siglo XX</li>
+                        <li>Publicidad y consumo en Cuba</li>
+                        <li>El Diario como medio comercial</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-card">
+                    <h3>✍️ Periodismo y Medios</h3>
+                    <ul class="guide-topics">
+                        <li>Evolución del periodismo cubano</li>
+                        <li>Tecnología de impresión (1832-1960)</li>
+                        <li>Ética periodística en el Diario</li>
+                        <li>La familia Rivero como dinastía editorial</li>
+                        <li>Periodistas legendarios del Diario</li>
+                        <li>Libertad de prensa vs. censura</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actividades didácticas -->
+        <div class="activities">
+            <h2>🎯 Actividades Didácticas</h2>
+            
+            <div class="activity-card">
+                <h3>Actividad 1: Análisis Comparativo de Portadas</h3>
+                <div class="activity-meta">
+                    <span>⏱️ Duración: 90 minutos</span>
+                    <span>👥 Nivel: Secundaria/Universidad</span>
+                    <span>📚 Área: Historia/Periodismo</span>
+                </div>
+                <div class="activity-description">
+                    Los estudiantes analizan portadas del Diario de la Marina de diferentes épocas 
+                    históricas (1900, 1930, 1959) comparando titulares, diseño, temas cubiertos, 
+                    y tono editorial.
+                </div>
+                <div class="activity-objectives">
+                    <h4>Objetivos de Aprendizaje:</h4>
+                    <ul>
+                        <li>Desarrollar habilidades de lectura crítica de fuentes primarias</li>
+                        <li>Comprender cómo el contexto histórico influye en la cobertura periodística</li>
+                        <li>Identificar cambios en diseño y contenido periodístico a través del tiempo</li>
+                        <li>Analizar el rol de la prensa en momentos históricos clave</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="activity-card">
+                <h3>Actividad 2: Debate sobre Libertad de Prensa</h3>
+                <div class="activity-meta">
+                    <span>⏱️ Duración: 2 sesiones de 60 minutos</span>
+                    <span>👥 Nivel: Universidad</span>
+                    <span>📚 Área: Ciencias Políticas/Comunicación</span>
+                </div>
+                <div class="activity-description">
+                    Debate estructurado sobre el cierre del Diario de la Marina en 1960. Los estudiantes 
+                    investigan diferentes perspectivas (gobierno revolucionario, periodistas del Diario, 
+                    comunidad internacional, exiliados cubanos) y debaten las implicaciones del cierre.
+                </div>
+                <div class="activity-objectives">
+                    <h4>Objetivos de Aprendizaje:</h4>
+                    <ul>
+                        <li>Comprender múltiples perspectivas sobre eventos históricos complejos</li>
+                        <li>Desarrollar habilidades argumentativas basadas en evidencia histórica</li>
+                        <li>Analizar el concepto de libertad de prensa en contextos autoritarios</li>
+                        <li>Reflexionar sobre el rol de los medios en sistemas democráticos vs. autoritarios</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="activity-card">
+                <h3>Actividad 3: Proyecto de Investigación Histórica</h3>
+                <div class="activity-meta">
+                    <span>⏱️ Duración: Proyecto semestral</span>
+                    <span>👥 Nivel: Universidad/Posgrado</span>
+                    <span>📚 Área: Historia/Periodismo</span>
+                </div>
+                <div class="activity-description">
+                    Los estudiantes seleccionan un tema (ej: cobertura de las elecciones presidenciales 
+                    cubanas, evolución de la sección cultural, análisis de publicidad comercial) y 
+                    realizan investigación primaria usando el archivo del Diario.
+                </div>
+                <div class="activity-objectives">
+                    <h4>Objetivos de Aprendizaje:</h4>
+                    <ul>
+                        <li>Desarrollar habilidades de investigación con fuentes primarias</li>
+                        <li>Aplicar metodologías de análisis de contenido periodístico</li>
+                        <li>Producir trabajo académico original basado en archivo histórico</li>
+                        <li>Presentar hallazgos de investigación de forma escrita y oral</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Temas de investigación sugeridos -->
+        <div class="research-topics">
+            <h2>🔍 Temas de Investigación Sugeridos</h2>
+            
+            <div class="topics-grid">
+                <div class="topic-box">
+                    <h3>La representación de la mujer en el Diario (1900-1960)</h3>
+                    <p>
+                        Análisis de cómo el periódico cubrió temas relacionados con mujeres, 
+                        sufragio femenino, roles de género, y participación femenina en la 
+                        sociedad cubana a través de seis décadas.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>Cobertura deportiva: desarrollo del béisbol cubano</h3>
+                    <p>
+                        Estudio de las secciones deportivas del Diario y su rol en popularizar 
+                        el béisbol como deporte nacional cubano.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>El Diario y las relaciones Cuba-Estados Unidos</h3>
+                    <p>
+                        Análisis editorial sobre eventos clave en la relación bilateral: 
+                        intervención de 1898, Enmienda Platt, política del Buen Vecino, etc.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>Publicidad comercial como espejo social</h3>
+                    <p>
+                        Estudio de los anuncios publicitarios en el Diario como fuente para 
+                        entender consumo, aspiraciones, y transformaciones sociales en Cuba.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>La Guerra Civil Española vista desde Cuba</h3>
+                    <p>
+                        Análisis de la cobertura del Diario sobre la Guerra Civil Española 
+                        (1936-1939) y el posicionamiento del periódico en el conflicto.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>Modernización urbana de La Habana</h3>
+                    <p>
+                        Cómo el Diario documentó la transformación arquitectónica y urbana 
+                        de La Habana en la primera mitad del siglo XX.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>Cobertura de la Segunda Guerra Mundial</h3>
+                    <p>
+                        Análisis de cómo el Diario cubrió el conflicto mundial desde la 
+                        perspectiva cubana y latinoamericana.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>El Diario como plataforma literaria</h3>
+                    <p>
+                        Estudio de los suplementos culturales y su rol en la vida literaria 
+                        cubana. Autores publicados, debates estéticos, movimientos literarios.
+                    </p>
+                </div>
+                
+                <div class="topic-box">
+                    <h3>Censura y autocensura en diferentes épocas</h3>
+                    <p>
+                        Comparación de cómo el Diario navegó presiones políticas bajo diferentes 
+                        gobiernos: colonia española, intervención estadounidense, dictaduras, 
+                        gobierno revolucionario.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora el Archivo Histórico</h3>
+            <p>Descubre más recursos y materiales educativos sobre el Diario de la Marina</p>
+            <div class="cta-buttons">
+                <a href="https://historiadeldiariodelamarinadecuba.com/index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html" class="btn btn-secondary">Historia Completa →</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/como-citar.html" class="btn btn-secondary">Cómo Citar →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p>
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html">Historia</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/familia-rivero.html">Familia Rivero</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/periodistas-legendarios.html">Periodistas</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/cierre-1960.html">El Cierre</a>
+        </p>
+    </footer>
+    
+</body>
+</html>

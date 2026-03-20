@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Edificio del Diario de la Marina - Prado y Teniente Rey</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #f4f1e8; 
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+        
+        /* Header estilo periódico vintage */
+        header {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid #8b6914;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 105, 20, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .masthead {
+            font-family: 'Times New Roman', serif;
+            font-size: 3.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-top: 3px double #8b6914;
+            border-bottom: 3px double #8b6914;
+            padding: 20px 0;
+            position: relative;
+            animation: fadeInDown 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            font-size: 1.8em;
+            color: #d4af37;
+            margin-top: 15px;
+            font-style: italic;
+            animation: fadeIn 1.5s ease 0.3s backwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .breadcrumb {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease 0.5s backwards;
+        }
+        
+        .breadcrumb a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 60px 40px;
+            margin-bottom: 50px;
+            border: 5px solid #8b6914;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            color: #d4af37;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+        
+        .hero .lead {
+            font-size: 1.3em;
+            line-height: 1.9;
+            max-width: 900px;
+        }
+        
+        .address-badge {
+            display: inline-block;
+            background: #8b6914;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 30px;
+            border: 3px solid #d4af37;
+        }
+        
+        /* Section */
+        .content-section {
+            background: white;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 2px solid #8b6914;
+        }
+        
+        .content-section h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .content-section h3 {
+            font-size: 1.8em;
+            color: #8b6914;
+            margin: 30px 0 20px;
+        }
+        
+        .content-section p {
+            font-size: 1.2em;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        /* Timeline arquitectónico */
+        .arch-timeline {
+            background: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .arch-timeline h2 {
+            font-size: 2.5em;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .arch-period {
+            background: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 6px solid #8b6914;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .arch-period h3 {
+            font-size: 1.8em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .arch-period .year {
+            font-size: 2em;
+            font-weight: bold;
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        .arch-period p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        /* Features grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border: 2px solid #8b6914;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #8b6914;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        
+        /* Comparación antes/después */
+        .comparison {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .comparison h2 {
+            font-size: 2.5em;
+            color: #d4af37;
+            margin-bottom: 40px;
+            text-align: center;
+            border-bottom: 3px solid #8b6914;
+            padding-bottom: 20px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .comparison-box {
+            background: rgba(244, 241, 232, 0.95);
+            padding: 40px;
+            color: #2c2c2c;
+        }
+        
+        .comparison-box h3 {
+            font-size: 2em;
+            color: #8b6914;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 15px;
+        }
+        
+        .comparison-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .comparison-box li {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .comparison-box li::before {
+            content: '▪';
+            position: absolute;
+            left: 10px;
+            color: #8b6914;
+            font-size: 1.3em;
+        }
+        
+        /* Quote */
+        .building-quote {
+            background: white;
+            padding: 60px 40px;
+            margin: 50px 0;
+            border: 4px solid #8b6914;
+            text-align: center;
+        }
+        
+        .building-quote blockquote {
+            font-size: 1.8em;
+            line-height: 1.7;
+            color: #1a1a1a;
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        .building-quote cite {
+            font-size: 1.1em;
+            color: #8b6914;
+            font-weight: bold;
+        }
+        
+        /* CTA */
+        .cta-box {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f4f1e8;
+            padding: 50px 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 3px solid #8b6914;
+        }
+        
+        .cta-box h3 {
+            font-size: 2.2em;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        
+        .cta-box p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            border: 3px solid #8b6914;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #8b6914;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6a5010;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 105, 20, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #d4af37;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(139, 105, 20, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #f4f1e8;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #8b6914;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+        
+        footer a {
+            color: #d4af37;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+            margin: 0 10px;
+        }
+        
+        footer a:hover {
+            border-bottom-color: #d4af37;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .masthead {
+                font-size: 2em;
+            }
+            
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="masthead">Diario de la Marina</div>
+        <div class="page-title">El Edificio: Prado y Teniente Rey</div>
+        <div class="breadcrumb">
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> → 
+            El Edificio
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🏛️ El Corazón del Periodismo Cubano</h1>
+            <div class="lead">
+                Durante más de un siglo, el edificio del Diario de la Marina en la esquina de 
+                Paseo del Prado y Teniente Rey fue mucho más que una construcción. Fue el epicentro 
+                del periodismo cubano, el hogar de las rotativas que imprimieron la historia de Cuba, 
+                y el símbolo arquitectónico de la libertad de prensa en la isla.
+            </div>
+            <div class="address-badge">📍 Prado y Teniente Rey, La Habana</div>
+        </div>
+        
+        <!-- Historia del edificio -->
+        <div class="content-section">
+            <h2>📖 Historia del Edificio</h2>
+            
+            <p>
+                El edificio del Diario de la Marina se ubicaba en una de las esquinas más emblemáticas 
+                de La Habana: la intersección del Paseo del Prado con la calle Teniente Rey (también 
+                conocida como Brasil), en pleno corazón del centro histórico de la capital cubana. 
+                Esta ubicación no era casualidad. El Prado era la avenida más importante de La Habana, 
+                el paseo central donde confluía la vida social, comercial y cultural de la ciudad.
+            </p>
+            
+            <h3>La Ubicación Estratégica</h3>
+            <p>
+                Estar en el Prado significaba estar en el centro neurálgico de Cuba. A pocas cuadras 
+                del Capitolio Nacional, del Parque Central, de los principales hoteles, teatros y 
+                comercios. Desde ese edificio, los periodistas del Diario tenían el pulso de La Habana 
+                y, por extensión, de toda Cuba. Era el lugar perfecto para un periódico que aspiraba 
+                a ser la voz de la nación.
+            </p>
+            
+            <h3>Arquitectura y Diseño</h3>
+            <p>
+                El edificio combinaba elementos de la arquitectura colonial española con toques de 
+                modernidad del siglo XX. Fachadas de piedra, balcones de hierro forjado, grandes 
+                ventanales que permitían la ventilación en el clima tropical habanero. En el interior, 
+                las oficinas de redacción ocupaban los pisos superiores, mientras que en los niveles 
+                inferiores rugían las enormes rotativas que imprimían miles de ejemplares cada día.
+            </p>
+            
+            <p>
+                El edificio tenía que cumplir dos funciones contradictorias: ser elegante como 
+                correspondía a la institución periodística más importante de Cuba, pero también 
+                robusto y funcional para albergar la maquinaria pesada de impresión. Los arquitectos 
+                lograron ese equilibrio, creando un espacio que era tanto oficina como fábrica, 
+                tanto salón intelectual como taller industrial.
+            </p>
+        </div>
+        
+        <!-- Timeline arquitectónico -->
+        <div class="arch-timeline">
+            <h2>⏳ Evolución del Edificio a Través de los Años</h2>
+            
+            <div class="arch-period">
+                <div class="year">1857-1890</div>
+                <h3>Primeras Instalaciones</h3>
+                <p>
+                    En sus primeros años, el Diario operaba desde instalaciones más modestas. 
+                    Como boletín comercial, no requería grandes espacios. Las operaciones eran 
+                    pequeñas: unas cuantas oficinas, una prensa manual, almacén de papel.
+                </p>
+            </div>
+            
+            <div class="arch-period">
+                <div class="year">1890-1920</div>
+                <h3>La Transformación Rivero</h3>
+                <p>
+                    Cuando José Ignacio Rivero adquiere el periódico, comienza su transformación 
+                    física. Se mudan a Prado y Teniente Rey. Nuevas rotativas, más espacio de 
+                    redacción, oficinas modernas. El edificio crece junto con el periódico. Se 
+                    añaden pisos, se modernizan instalaciones, se instala equipo de impresión de 
+                    última generación importado de Estados Unidos y Europa.
+                </p>
+            </div>
+            
+            <div class="arch-period">
+                <div class="year">1920-1940</div>
+                <h3>La Edad de Oro</h3>
+                <p>
+                    Durante la época dorada del Diario, el edificio alcanza su máximo esplendor. 
+                    Las rotativas funcionan día y noche. Centenares de empleados trabajan en múltiples 
+                    turnos. La sala de redacción es un hervidero de actividad: periodistas escribiendo, 
+                    fotógrafos revelando, editores corrigiendo. El sonido de las máquinas de escribir 
+                    y el olor a tinta fresca son constantes. Es el corazón palpitante del periodismo 
+                    cubano.
+                </p>
+            </div>
+            
+            <div class="arch-period">
+                <div class="year">1940-1960</div>
+                <h3>Modernización Final</h3>
+                <p>
+                    En las últimas dos décadas, el Diario continúa modernizándose. Nuevas rotativas 
+                    aún más rápidas, sistemas de comunicación mejorados, teléfonos en cada departamento. 
+                    El edificio se adapta a los tiempos modernos sin perder su carácter histórico. 
+                    Hasta el último día, el 12 de mayo de 1960, las instalaciones funcionaban a plena 
+                    capacidad, produciendo el periódico de mayor circulación en Cuba.
+                </p>
+            </div>
+            
+            <div class="arch-period">
+                <div class="year">1960-Presente</div>
+                <h3>Después de la Confiscación</h3>
+                <p>
+                    Tras la confiscación del 12 de mayo de 1960, el edificio pasó a manos del gobierno 
+                    revolucionario. Las rotativas que imprimieron libertad durante 128 años fueron 
+                    usadas para propaganda estatal. Con el tiempo, el edificio cayó en deterioro como 
+                    muchas construcciones históricas de La Habana. Hoy en día, la estructura física 
+                    permanece, pero vacía del alma que la habitó durante más de un siglo. Es un 
+                    fantasma arquitectónico del periodismo que fue.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Características del edificio -->
+        <div class="content-section">
+            <h2>🏗️ Características del Edificio</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🖨️</span>
+                    <h3>Sala de Rotativas</h3>
+                    <p>
+                        El corazón industrial del edificio. Enormes rotativas importadas capaces 
+                        de imprimir decenas de miles de ejemplares por hora. El rugido de estas 
+                        máquinas era el sonido de la libertad de prensa.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">✍️</span>
+                    <h3>Sala de Redacción</h3>
+                    <p>
+                        El cerebro del periódico. Decenas de escritorios donde periodistas, editores 
+                        y columnistas trabajaban febrilmente. Máquinas de escribir sonando, teléfonos 
+                        sonando, humo de cigarrillos, conversaciones intensas sobre la noticia del día.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📸</span>
+                    <h3>Laboratorio Fotográfico</h3>
+                    <p>
+                        Cuartos oscuros donde fotógrafos revelaban las imágenes que ilustrarían 
+                        la primera plana. Tanques de químicos, papel fotográfico, luz roja. 
+                        El periodismo visual cubano nacía aquí.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">📚</span>
+                    <h3>Archivo Histórico</h3>
+                    <p>
+                        Habitaciones completas dedicadas a preservar ediciones pasadas. 128 años 
+                        de historia cubana almacenados en papel. Un tesoro que quedó confiscado 
+                        en 1960.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🏢</span>
+                    <h3>Oficinas Administrativas</h3>
+                    <p>
+                        La oficina del director, departamento de publicidad, contabilidad, recursos 
+                        humanos. Todo el aparato administrativo que hacía funcionar la empresa 
+                        periodística más grande de Cuba.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🚚</span>
+                    <h3>Área de Distribución</h3>
+                    <p>
+                        Muelles de carga donde camiones esperaban para llevar los periódicos recién 
+                        impresos a todos los rincones de Cuba. Operación logística que funcionaba 
+                        como reloj cada madrugada.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Comparación antes/después -->
+        <div class="comparison">
+            <h2>⚖️ El Edificio: Antes y Después de 1960</h2>
+            
+            <div class="comparison-grid">
+                <div class="comparison-box">
+                    <h3>🌟 1832-1960: Vida y Luz</h3>
+                    <ul>
+                        <li>Centro neurálgico del periodismo cubano</li>
+                        <li>Cientos de empleados trabajando día y noche</li>
+                        <li>Rotativas rugiendo, produciendo 120,000 ejemplares diarios</li>
+                        <li>Periodistas legendarios caminando por sus pasillos</li>
+                        <li>Archivo histórico de 128 años preservado</li>
+                        <li>Símbolo de libertad de expresión</li>
+                        <li>Edificio mantenido, moderno, funcional</li>
+                        <li>Lugar de trabajo, orgullo profesional, institución nacional</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-box">
+                    <h3>⚫ 1960-Presente: Confiscación y Declive</h3>
+                    <ul>
+                        <li>Confiscado por el gobierno revolucionario</li>
+                        <li>Personal original expulsado y exiliado</li>
+                        <li>Rotativas usadas para propaganda estatal</li>
+                        <li>Archivo histórico bajo control gubernamental</li>
+                        <li>Muchos documentos perdidos o destruidos</li>
+                        <li>Deterioro progresivo de instalaciones</li>
+                        <li>De símbolo de libertad a símbolo de represión</li>
+                        <li>Fantasma arquitectónico de lo que fue</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quote sobre el edificio -->
+        <div class="building-quote">
+            <blockquote>
+                "Cada mañana, al entrar al edificio en Prado y Teniente Rey, sentía que entraba 
+                no solo a mi lugar de trabajo, sino al corazón mismo de Cuba. Ese edificio no era 
+                piedra y cemento. Era historia viva, periodismo en acción, la voz de una nación 
+                que se pensaba a sí misma."
+            </blockquote>
+            <cite>— Periodista del Diario de la Marina (1940s-1960)</cite>
+        </div>
+        
+        <!-- Significado del edificio -->
+        <div class="content-section">
+            <h2>💎 Más que un Edificio: Un Símbolo</h2>
+            
+            <p>
+                El edificio del Diario de la Marina en Prado y Teniente Rey trascendió su función 
+                arquitectónica. Se convirtió en símbolo. Para los cubanos que valoraban la libertad 
+                de prensa, era un faro. Para los periodistas, era un templo. Para los políticos, 
+                era un recordatorio constante del poder de la palabra escrita.
+            </p>
+            
+            <p>
+                Cuando alguien decía "voy al Diario" en La Habana, todo el mundo sabía a qué se 
+                refería. No necesitaba especificar dirección. El edificio era tan icónico como el 
+                Capitolio o el Malecón. Formaba parte del paisaje mental de los habaneros, del mapa 
+                emocional de la ciudad.
+            </p>
+            
+            <p>
+                Su confiscación el 12 de mayo de 1960 no fue solo la toma de una propiedad. Fue 
+                un acto simbólico profundo. El nuevo gobierno no solo quería el edificio y las 
+                rotativas. Quería borrar lo que representaba: independencia editorial, pensamiento 
+                crítico, pluralismo de ideas, la tradición del periodismo libre.
+            </p>
+            
+            <p>
+                Hoy, más de seis décadas después, el edificio físico sigue ahí, deteriorado pero 
+                en pie. Los exiliados que trabajaron allí lo recuerdan con nostalgia. Los 
+                historiadores lo estudian como pieza clave del patrimonio periodístico cubano. 
+                Y para todos aquellos que valoran la libertad de prensa, permanece como símbolo 
+                de lo que Cuba tuvo y perdió.
+            </p>
+            
+            <p>
+                Las paredes guardan ecos de las rotativas que imprimieron 128 años de historia. 
+                Los pasillos recuerdan los pasos de generaciones de periodistas. Las oficinas 
+                conservan el fantasma de debates editoriales que definieron épocas. El edificio 
+                del Diario de la Marina en Prado y Teniente Rey ya no es lo que fue, pero su 
+                memoria permanece imborrable en la historia del periodismo cubano y latinoamericano.
+            </p>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-box">
+            <h3>Explora Más sobre el Diario de la Marina</h3>
+            <p>Descubre la historia completa del periódico que habitó este edificio emblemático</p>
+            <div class="cta-buttons">
+                <a href="https://historiadeldiariodelamarinadecuba.com/index.html" class="btn btn-primary">← Volver al Inicio</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html" class="btn btn-secondary">Historia Completa →</a>
+                <a href="https://historiadeldiariodelamarinadecuba.com/cierre-1960.html" class="btn btn-secondary">El Cierre de 1960 →</a>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p><strong>Diario de la Marina - Archivo Histórico Digital</strong></p>
+        <p>Preservando la memoria del periodismo libre cubano (1832-1960)</p>
+        <p>
+            <a href="https://historiadeldiariodelamarinadecuba.com/index.html">Inicio</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/historia-completa.html">Historia</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/familia-rivero.html">Familia Rivero</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/periodistas-legendarios.html">Periodistas</a> •
+            <a href="https://historiadeldiariodelamarinadecuba.com/cierre-1960.html">El Cierre</a>
+        </p>
+    </footer>
+    
+</body>
+</html>
